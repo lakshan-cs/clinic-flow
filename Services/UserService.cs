@@ -3,7 +3,6 @@ using ClinicFlow.Exceptions;
 using ClinicFlow.Models;
 using ClinicFlow.Repositories.Interfaces;
 using ClinicFlow.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 
 namespace ClinicFlow.Services
 {

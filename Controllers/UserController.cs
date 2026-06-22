@@ -1,5 +1,4 @@
 ﻿using ClinicFlow.Dto;
-using ClinicFlow.Exceptions;
 using ClinicFlow.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
