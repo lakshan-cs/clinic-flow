@@ -44,10 +44,6 @@ namespace ClinicFlow.Exceptions
                     statusCode = HttpStatusCode.Conflict;
                     message = exception.Message;
                     break;
-                case UserNotFoundException: 
-                    statusCode = HttpStatusCode.NotFound;
-                    message = exception.Message;
-                    break;
                 case InvalidRoleException:
                     statusCode = HttpStatusCode.BadRequest;
                     message = exception.Message;

@@ -1,7 +1,9 @@
-﻿using ClinicFlow.Exceptions;
+﻿using ClinicFlow.Dto;
+using ClinicFlow.Exceptions;
 using ClinicFlow.Models;
 using ClinicFlow.Repositories.Interfaces;
 using ClinicFlow.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ClinicFlow.Services
 {
@@ -14,15 +16,27 @@ namespace ClinicFlow.Services
             this.userRepository = userRepository;
         }
 
-        public User GetUserByEmail(string email)
+        public LoginResponse Login(LoginRequest loginRequest)
         {
-            var user = userRepository.GetUserByEmail(email);
-            if (user == null)
+            var user = GetUserByEmail(loginRequest.Email);
+            if (user == null || !BCrypt.Net.BCrypt.Verify(loginRequest.Password, user.Password))
             {
-                throw new UserNotFoundException("User not found with email: " + email);
+                throw new InvalidCredentialsException("Invalid email or password.");
             }
 
-            return user;
+            var loginResponse = new LoginResponse
+            {
+                Id = user.Id.ToString(),
+                Username = user.Username,
+                Email = user.Email
+            };
+
+            return loginResponse;
+        }
+
+        private User GetUserByEmail(string email)
+        {
+            return userRepository.GetUserByEmail(email);
         }
 
         public User GetUserByRole(string role)

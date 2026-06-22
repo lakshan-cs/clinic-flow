@@ -5,6 +5,7 @@ using ClinicFlow.Services.Interfaces;
 using ClinicFlow.Services;
 using Microsoft.EntityFrameworkCore;
 using ClinicFlow.Exceptions;
+using ClinicFlow.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,8 +16,10 @@ builder.Services.AddDbContext<ClinicDbContext>(options =>
     options.UseOracle(connectionString));
 
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
-
 builder.Services.AddScoped<IPatientService, PatientService>();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

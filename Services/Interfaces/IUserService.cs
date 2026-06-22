@@ -1,10 +1,11 @@
-﻿using ClinicFlow.Models;
+﻿using ClinicFlow.Dto;
+using ClinicFlow.Models;
 
 namespace ClinicFlow.Services.Interfaces
 {
     public interface IUserService
     {
-        User GetUserByEmail(string email);
+        LoginResponse Login(LoginRequest loginRequest);
 
         User GetUserByRole(string role);
     }

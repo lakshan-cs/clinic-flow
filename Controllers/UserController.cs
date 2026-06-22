@@ -1,8 +1,6 @@
 ﻿using ClinicFlow.Dto;
 using ClinicFlow.Exceptions;
-using ClinicFlow.Models;
 using ClinicFlow.Services.Interfaces;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClinicFlow.Controllers
@@ -18,22 +16,10 @@ namespace ClinicFlow.Controllers
             this.userService = userService;
         }
 
-        [HttpPost("/login")]
+        [HttpPost("login")]
         public ActionResult<LoginResponse> Login([FromBody] LoginRequest loginRequest)
         {
-            var user = userService.GetUserByEmail(loginRequest.Email);
-            if (user == null || user?.Password != loginRequest.Password)
-            {
-                throw new InvalidCredentialsException("Invalid email or password.");
-            }
-
-            var loginResponse = new LoginResponse
-            {
-                Id = user.Id.ToString(),
-                Username = user.Username,
-                Email = user.Email
-            };
-
+            var loginResponse = userService.Login(loginRequest);
             return Ok(loginResponse);
         }
     }
