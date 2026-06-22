@@ -36,7 +36,7 @@ namespace ClinicFlow.Services
             var patient = patientRepository.GetPatientById(id);
             if (patient == null)
             {
-                throw new NotFoundException("Patient not found with ID: " + id);
+                throw new ArgumentException("Patient not found with ID: " + id);
             }
             return patient;
         }
@@ -47,7 +47,7 @@ namespace ClinicFlow.Services
 
             if(existingPatient == null)
             {
-                throw new NotFoundException("Patient not found with ID: " + patient.Id);
+                throw new ArgumentException("Patient not found with ID: " + patient.Id);
             }
 
             existingPatient.FullName = patient.FullName;
@@ -65,7 +65,7 @@ namespace ClinicFlow.Services
             var patient = patientRepository.GetPatientById(id);
             if (patient == null)
             {
-                throw new NotFoundException("Patient not found with ID: " + id);
+                throw new ArgumentException("Patient not found with ID: " + id);
             }
             patientRepository.DeletePatient(id);
         }

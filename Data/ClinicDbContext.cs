@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ClinicFlow.Models;
 
 namespace ClinicFlow.Data
 {
@@ -7,7 +8,9 @@ namespace ClinicFlow.Data
         public ClinicDbContext(DbContextOptions<ClinicDbContext> options) : base(options)
         {
         }
-        public DbSet<Models.Patient> Patients { get; set; }
-   
+        public DbSet<Patient> Patients { get; set; }
+
+        public DbSet<User> Users { get; set; }
+
     }
 }
