@@ -36,12 +36,24 @@ namespace ClinicFlow.Exceptions
 
             switch (exception)
             {
-                case NotFoundException:
+                case ArgumentException:
                     statusCode = HttpStatusCode.NotFound;
                     message = exception.Message;
                     break;
                 case DuplicateResourceException:
                     statusCode = HttpStatusCode.Conflict;
+                    message = exception.Message;
+                    break;
+                case UserNotFoundException: 
+                    statusCode = HttpStatusCode.NotFound;
+                    message = exception.Message;
+                    break;
+                case InvalidRoleException:
+                    statusCode = HttpStatusCode.BadRequest;
+                    message = exception.Message;
+                    break;
+                case InvalidCredentialsException:
+                    statusCode = HttpStatusCode.Unauthorized;
                     message = exception.Message;
                     break;
             }
