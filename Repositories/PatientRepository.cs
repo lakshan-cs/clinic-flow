@@ -36,13 +36,18 @@ namespace ClinicFlow.Repositories
         public void DeletePatient(int patientID)
         {
             var patient = context.Patients.Find(patientID);
-            if (patient != null)
-            {
-                context.Patients.Remove(patient);
-                context.SaveChanges();
-            }
-            Console.WriteLine("Patient deleted successfully.");
+            if (patient == null) return;
 
+            // Remove dependent PatientAllergy rows to avoid FK constraint violations
+            var patientAllergies = context.PatientAllergies.Where(pa => pa.PatientId == patientID).ToList();
+            if (patientAllergies.Any())
+            {
+                context.PatientAllergies.RemoveRange(patientAllergies);
+            }
+
+            context.Patients.Remove(patient);
+            context.SaveChanges();
+            Console.WriteLine("Patient deleted successfully.");
         }
 
     }

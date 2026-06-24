@@ -43,7 +43,20 @@ namespace ClinicFlow.Controllers
                 Email = patientRequest.Email,
                 PhoneNumber = patientRequest.PhoneNumber
             };
-            patientService.AddPatient(patient);
+            // Prepare patient allergies from request
+            var patientAllergies = new List<PatientAllergy>();
+            foreach (var allergyRequest in patientRequest.PatientAllergies)
+            {
+                patientAllergies.Add(new PatientAllergy
+                {
+                    AllergyId = allergyRequest.AllergyId,
+                    Severity = allergyRequest.Severity ?? string.Empty,
+                    Notes = allergyRequest.Notes
+                });
+            }
+
+            // Add patient along with allergies atomically
+            patientService.AddPatientWithAllergies(patient, patientAllergies);
 
             var patientResponse = new PatientResponse
             {
@@ -53,6 +66,7 @@ namespace ClinicFlow.Controllers
                 Email = patient.Email,
                 PhoneNumber = patient.PhoneNumber
             };
+
             return CreatedAtAction(
                 nameof(GetPatient), 
                 new { id = patient.Id }, 

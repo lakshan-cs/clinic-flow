@@ -1,6 +1,7 @@
 namespace ClinicFlow.Dto;
 
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 public class PatientRequest
 {
@@ -17,4 +18,8 @@ public class PatientRequest
 
     [Required]
     public string? PhoneNumber { get; set; }
+
+    [JsonPropertyName("allergies")]
+    public List<PatientAllergyRequest> PatientAllergies { get; set; } 
+        = new List<PatientAllergyRequest>();
 }

@@ -1,11 +1,12 @@
 using ClinicFlow.Data;
+using ClinicFlow.Exceptions;
 using ClinicFlow.Models;
 using ClinicFlow.Repositories;
-using ClinicFlow.Services.Interfaces;
-using ClinicFlow.Services;
-using Microsoft.EntityFrameworkCore;
-using ClinicFlow.Exceptions;
 using ClinicFlow.Repositories.Interfaces;
+using ClinicFlow.Services;
+using ClinicFlow.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,8 +30,12 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<IAllergyRepository, AllergyRepository>();
 builder.Services.AddScoped<IAllergyService, AllergyService>();
+builder.Services.AddScoped<IPatientAllergyRepository, PatientAllergyRepository>();
+builder.Services.AddScoped<IPatientAllergyService, PatientAllergyService>();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(
+    o => o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
+    );
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 

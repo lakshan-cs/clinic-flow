@@ -16,4 +16,5 @@ public class Patient
     public string? Email { get; set; }
     [Column("PHONE_NUMBER")]
     public string? PhoneNumber { get; set; }
+
 }
