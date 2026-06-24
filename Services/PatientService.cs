@@ -2,30 +2,77 @@
 using ClinicFlow.Models;
 using ClinicFlow.Services.Interfaces;
 using ClinicFlow.Exceptions;
+using ClinicFlow.Data;
+using System.Numerics;
 
 namespace ClinicFlow.Services
 {
     public class PatientService : IPatientService
     {
         private readonly IPatientRepository patientRepository;
-        public PatientService(IPatientRepository patientRepository)
+        private readonly IAllergyRepository allergyRepository;
+        private readonly IPatientAllergyRepository patientAllergyRepository;
+        private readonly ClinicDbContext dbContext;
+
+        public PatientService(
+            IPatientRepository patientRepository, 
+            IAllergyRepository allergyRepository, 
+            IPatientAllergyRepository patientAllergyRepository, 
+            ClinicDbContext dbContext
+            )
         {
             this.patientRepository = patientRepository;
-        }
-
-        public void AddPatient(Patient patient) 
-        {
-           var existingPatient = patientRepository.GetPatients()
-           .FirstOrDefault(p => p.Email == patient.Email);
-
-           if (existingPatient != null)
-           {
-               throw new DuplicateResourceException("A patient with the same email already exists: " + patient.Email);
-           }
-            
-           patientRepository.AddPatient(patient);
+            this.allergyRepository = allergyRepository;
+            this.patientAllergyRepository = patientAllergyRepository;
+            this.dbContext = dbContext;
         }
         
+        public void AddPatientWithAllergies(Patient patient, IEnumerable<PatientAllergy> patientAllergies)
+        {
+            using (var transaction = dbContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    var existingPatient = patientRepository.GetPatients()
+                        .FirstOrDefault(p => p.Email == patient.Email);
+
+                    if (existingPatient != null)
+                    {
+                        throw new DuplicateResourceException("A patient with the same email already exists: " + patient.Email);
+                    }
+                    // Add the patient first
+                    patientRepository.AddPatient(patient);
+                    // Now add the allergies for the patient
+                    foreach (var patientAllergy in patientAllergies)
+                    {
+                        // Ensure the allergy exists
+                        var allergy = allergyRepository.GetAllergyById(patientAllergy.AllergyId);
+                        if (allergy == null)
+                        {
+                            throw new ArgumentException("Allergy not found with ID: " + patientAllergy.AllergyId);
+                        }
+                        patientAllergy.PatientId = patient.Id;
+                        IEnumerable<PatientAllergy> allergies = patientAllergyRepository
+                            .GetPatientAllergiesByPatientId(patient.Id);
+
+                        foreach(var existingAllergy in allergies)
+                        {
+                            if (existingAllergy.AllergyId == patientAllergy.AllergyId)
+                            {
+                                throw new DuplicateResourceException("The patient already has this allergy recorded: " + patientAllergy.AllergyId);
+                            }
+                        }
+                        patientAllergyRepository.AddPatientAllergy(patientAllergy);
+                    }
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
+        }
         public IEnumerable<Patient> GetPatients()
         {
             return patientRepository.GetPatients();
