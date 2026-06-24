@@ -20,5 +20,7 @@ namespace ClinicFlow.Data
 
         public DbSet<PatientAllergy> PatientAllergies { get; set; }
 
+        public DbSet<Appointment> Appointments { get; set; }
+
     }
 }
