@@ -35,7 +35,7 @@ namespace ClinicFlow.Exceptions
 
             switch (exception)
             {
-                case ArgumentException:
+                case NotFoundException:
                     statusCode = HttpStatusCode.NotFound;
                     message = exception.Message;
                     break;
@@ -49,6 +49,10 @@ namespace ClinicFlow.Exceptions
                     break;
                 case InvalidCredentialsException:
                     statusCode = HttpStatusCode.Unauthorized;
+                    message = exception.Message;
+                    break;
+                case AppointmentConflictException:
+                    statusCode = HttpStatusCode.Conflict;
                     message = exception.Message;
                     break;
             }
