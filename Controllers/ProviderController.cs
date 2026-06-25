@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using ClinicFlow.Services.Interfaces;
 using ClinicFlow.Models;
 using ClinicFlow.Dto;
+using ClinicFlow.Exceptions;
 
 namespace ClinicFlow.Controllers
 {
@@ -31,12 +32,8 @@ namespace ClinicFlow.Controllers
         [HttpGet("{id}")]
         public ActionResult<Provider> GetProvider(int id)
         {
-            var provider = providerService.GetProvider(id);
-            if (provider == null)
-            {
-                return NotFound();
-            }
-            return provider;
+            return providerService.GetProvider(id);
+           
         }
 
         [HttpPost]
