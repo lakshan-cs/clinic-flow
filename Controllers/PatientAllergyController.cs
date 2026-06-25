@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ClinicFlow.Services.Interfaces;
 using ClinicFlow.Models;
-using ClinicFlow.Dto;
 
 namespace ClinicFlow.Controllers
 {

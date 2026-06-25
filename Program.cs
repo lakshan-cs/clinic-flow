@@ -1,6 +1,5 @@
 using ClinicFlow.Data;
 using ClinicFlow.Exceptions;
-using ClinicFlow.Models;
 using ClinicFlow.Repositories;
 using ClinicFlow.Repositories.Interfaces;
 using ClinicFlow.Services;

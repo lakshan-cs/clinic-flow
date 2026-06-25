@@ -1,6 +1,5 @@
 using ClinicFlow.Data;
 using ClinicFlow.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace ClinicFlow.Repositories
 {

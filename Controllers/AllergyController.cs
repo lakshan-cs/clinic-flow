@@ -25,12 +25,7 @@ namespace ClinicFlow.Controllers
         [HttpGet("{id}")]
         public ActionResult<Allergy> GetAllergy(int id)
         {
-            var allergy = allergyService.GetAllergy(id);
-            if (allergy == null)
-            {
-                return NotFound();
-            }
-            return allergy;
+            return allergyService.GetAllergy(id);
         }
 
         [HttpPost]

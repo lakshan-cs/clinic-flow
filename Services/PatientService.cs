@@ -3,7 +3,6 @@ using ClinicFlow.Models;
 using ClinicFlow.Services.Interfaces;
 using ClinicFlow.Exceptions;
 using ClinicFlow.Data;
-using System.Numerics;
 
 namespace ClinicFlow.Services
 {
