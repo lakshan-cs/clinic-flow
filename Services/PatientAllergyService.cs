@@ -1,6 +1,7 @@
 using ClinicFlow.Repositories;
 using ClinicFlow.Models;
 using ClinicFlow.Services.Interfaces;
+using ClinicFlow.Exceptions;
 
 namespace ClinicFlow.Services
 {
@@ -23,10 +24,10 @@ namespace ClinicFlow.Services
         public void AddPatientAllergy(PatientAllergy patientAllergy)
         {
             if (patientRepository.GetPatientById(patientAllergy.PatientId) == null)
-                throw new ArgumentException("Patient not found with ID: " + patientAllergy.PatientId);
+                throw new NotFoundException("Patient not found with ID: " + patientAllergy.PatientId);
 
             if (allergyRepository.GetAllergyById(patientAllergy.AllergyId) == null)
-                throw new ArgumentException("Allergy not found with ID: " + patientAllergy.AllergyId);
+                throw new NotFoundException("Allergy not found with ID: " + patientAllergy.AllergyId);
 
             patientAllergyRepository.AddPatientAllergy(patientAllergy);
         }
@@ -40,21 +41,21 @@ namespace ClinicFlow.Services
         {
             var pa = patientAllergyRepository.GetPatientAllergyById(id);
             if (pa == null)
-                throw new ArgumentException("PatientAllergy not found with ID: " + id);
+                throw new NotFoundException("PatientAllergy not found with ID: " + id);
             return pa;
         }
 
         public IEnumerable<PatientAllergy> GetPatientAllergiesByPatientId(int patientId)
         {
             if (patientRepository.GetPatientById(patientId) == null)
-                throw new ArgumentException("Patient not found with ID: " + patientId);
+                throw new NotFoundException("Patient not found with ID: " + patientId);
             return patientAllergyRepository.GetPatientAllergiesByPatientId(patientId);
         }
 
         public IEnumerable<PatientAllergy> GetPatientAllergiesByAllergyId(int allergyId)
         {
             if (allergyRepository.GetAllergyById(allergyId) == null)
-                throw new ArgumentException("Allergy not found with ID: " + allergyId);
+                throw new NotFoundException("Allergy not found with ID: " + allergyId);
             return patientAllergyRepository.GetPatientAllergiesByAllergyId(allergyId);
         }
 
@@ -62,7 +63,7 @@ namespace ClinicFlow.Services
         {
             var existing = patientAllergyRepository.GetPatientAllergyById(patientAllergy.Id);
             if (existing == null)
-                throw new ArgumentException("PatientAllergy not found with ID: " + patientAllergy.Id);
+                throw new NotFoundException("PatientAllergy not found with ID: " + patientAllergy.Id);
 
             existing.Severity = patientAllergy.Severity;
             existing.Notes = patientAllergy.Notes;
@@ -77,7 +78,7 @@ namespace ClinicFlow.Services
             if (patientAllergyRepository.GetPatientAllergyById(id) != null)
                 patientAllergyRepository.DeletePatientAllergy(id);
             else
-                throw new ArgumentException("PatientAllergy not found with ID: " + id);
+                throw new NotFoundException("PatientAllergy not found with ID: " + id);
         }
     }
 }

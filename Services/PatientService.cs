@@ -49,7 +49,7 @@ namespace ClinicFlow.Services
                         var allergy = allergyRepository.GetAllergyById(patientAllergy.AllergyId);
                         if (allergy == null)
                         {
-                            throw new ArgumentException("Allergy not found with ID: " + patientAllergy.AllergyId);
+                            throw new NotFoundException("Allergy not found with ID: " + patientAllergy.AllergyId);
                         }
                         patientAllergy.PatientId = patient.Id;
                         IEnumerable<PatientAllergy> allergies = patientAllergyRepository
@@ -83,7 +83,7 @@ namespace ClinicFlow.Services
             var patient = patientRepository.GetPatientById(id);
             if (patient == null)
             {
-                throw new ArgumentException("Patient not found with ID: " + id);
+                throw new NotFoundException("Patient not found with ID: " + id);
             }
             return patient;
         }
@@ -94,7 +94,7 @@ namespace ClinicFlow.Services
 
             if(existingPatient == null)
             {
-                throw new ArgumentException("Patient not found with ID: " + patient.Id);
+                throw new NotFoundException("Patient not found with ID: " + patient.Id);
             }
 
             existingPatient.FullName = patient.FullName;
@@ -112,7 +112,7 @@ namespace ClinicFlow.Services
             var patient = patientRepository.GetPatientById(id);
             if (patient == null)
             {
-                throw new ArgumentException("Patient not found with ID: " + id);
+                throw new NotFoundException("Patient not found with ID: " + id);
             }
             patientRepository.DeletePatient(id);
         }

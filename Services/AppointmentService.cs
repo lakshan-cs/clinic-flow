@@ -1,3 +1,4 @@
+using ClinicFlow.Exceptions;
 using ClinicFlow.Models;
 using ClinicFlow.Repositories;
 using ClinicFlow.Repositories.Interfaces;
@@ -16,6 +17,11 @@ namespace ClinicFlow.Services
 
         public void AddAppointment(Appointment appointment)
         {
+            var appointments = appointmentRepository.GetAppointmentsByProviderId(appointment.ProviderId);
+            if (appointments != null && appointments.Any(a => a.DateTime == appointment.DateTime))
+            {
+                throw new DuplicateResourceException("Provider already has an appointment at this time.");
+            }
             appointmentRepository.AddAppointment(appointment);
         }
 
@@ -29,7 +35,7 @@ namespace ClinicFlow.Services
             var appointment = appointmentRepository.GetAppointmentById(id);
             if (appointment == null)
             {
-                throw new ArgumentException("Appointment not found with ID: " + id);
+                throw new NotFoundException("Appointment not found with ID: " + id);
             }
             return appointment;
         }
@@ -39,7 +45,7 @@ namespace ClinicFlow.Services
             var appointments = appointmentRepository.GetAppointmentsByPatientId(patientId);
             if (appointments == null || !appointments.Any())
             {
-                throw new ArgumentException("No appointments found for patient with ID: " + patientId);
+                throw new NotFoundException("No appointments found for patient with ID: " + patientId);
             }
             return appointments;
         }
@@ -49,7 +55,7 @@ namespace ClinicFlow.Services
             var appointments = appointmentRepository.GetAppointmentsByProviderId(providerId);
             if (appointments == null || !appointments.Any())
             {
-                throw new ArgumentException("No appointments found for provider with ID: " + providerId);
+                throw new NotFoundException("No appointments found for provider with ID: " + providerId);
             }
             return appointments;
         }
@@ -59,7 +65,7 @@ namespace ClinicFlow.Services
             var appointments = appointmentRepository.GetAppointmentsByClinicId(clinicId);
             if (appointments == null || !appointments.Any())
             {
-                throw new ArgumentException("No appointments found for clinic with ID: " + clinicId);
+                throw new NotFoundException("No appointments found for clinic with ID: " + clinicId);
             }
             return appointments;
         }

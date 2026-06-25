@@ -1,6 +1,7 @@
 using ClinicFlow.Repositories;
 using ClinicFlow.Models;
 using ClinicFlow.Services.Interfaces;
+using ClinicFlow.Exceptions;
 
 namespace ClinicFlow.Services
 {
@@ -28,7 +29,7 @@ namespace ClinicFlow.Services
             var allergy = allergyRepository.GetAllergyById(id);
             if (allergy == null)
             {
-                throw new ArgumentException("Allergy not found with ID: " + id);
+                throw new NotFoundException("Allergy not found with ID: " + id);
             }
             return allergy;
         }
@@ -38,7 +39,7 @@ namespace ClinicFlow.Services
             var existing = allergyRepository.GetAllergyById(allergy.Id);
             if (existing == null)
             {
-                throw new ArgumentException("Allergy not found with ID: " + allergy.Id);
+                throw new NotFoundException("Allergy not found with ID: " + allergy.Id);
             }
 
             existing.AllergyType = allergy.AllergyType;
@@ -51,7 +52,7 @@ namespace ClinicFlow.Services
             if (allergyRepository.GetAllergyById(id) != null)
                 allergyRepository.DeleteAllergy(id);
             else
-                throw new ArgumentException("Allergy not found with ID: " + id);
+                throw new NotFoundException("Allergy not found with ID: " + id);
         }
     }
 }

@@ -1,6 +1,7 @@
 using ClinicFlow.Repositories;
 using ClinicFlow.Models;
 using ClinicFlow.Services.Interfaces;
+using ClinicFlow.Exceptions;
 
 namespace ClinicFlow.Services
 {
@@ -29,7 +30,7 @@ namespace ClinicFlow.Services
         {
             if (ClinicRepository.GetClinicById(clinicId) == null)
             {
-                throw new ArgumentException("Clinic not found with ID: " + clinicId);
+                throw new NotFoundException("Clinic not found with ID: " + clinicId);
             }
 
             return providerRepository.GetProvidersByClinicId(clinicId);
@@ -40,7 +41,7 @@ namespace ClinicFlow.Services
              var provider = providerRepository.GetProviderById(id);
              if (provider == null)
              {
-                 throw new ArgumentException("Provider not found with ID: " + id);
+                 throw new NotFoundException("Provider not found with ID: " + id);
              }
              return provider;
         }
@@ -50,7 +51,7 @@ namespace ClinicFlow.Services
             var existingProvider = providerRepository.GetProviderById(provider.Id);
             if (existingProvider == null)
             {
-                throw new ArgumentException("Provider not found with ID: " + provider.Id);
+                throw new NotFoundException("Provider not found with ID: " + provider.Id);
             }
 
             existingProvider.Name = provider.Name;
@@ -65,7 +66,7 @@ namespace ClinicFlow.Services
             if (providerRepository.GetProviderById(id) != null)
                 providerRepository.DeleteProvider(id);
             else
-                throw new ArgumentException("Provider not found with ID: " + id);
+                throw new NotFoundException("Provider not found with ID: " + id);
         }
     }
 }
