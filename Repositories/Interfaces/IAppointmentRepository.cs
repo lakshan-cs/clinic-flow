@@ -10,5 +10,11 @@ namespace ClinicFlow.Repositories.Interfaces
         IEnumerable<Appointment> GetAllAppointments();
 
         Appointment GetAppointmentById(int id);
+
+        IEnumerable<Appointment> GetAppointmentsByPatientId(int patientId);
+
+        IEnumerable<Appointment> GetAppointmentsByProviderId(int providerId);
+
+        IEnumerable<Appointment> GetAppointmentsByClinicId(int clinicId);
     }
 }

@@ -33,5 +33,35 @@ namespace ClinicFlow.Services
             }
             return appointment;
         }
+
+        public IEnumerable<Appointment> GetAppointmentsByPatientId(int patientId)
+        {
+            var appointments = appointmentRepository.GetAppointmentsByPatientId(patientId);
+            if (appointments == null || !appointments.Any())
+            {
+                throw new ArgumentException("No appointments found for patient with ID: " + patientId);
+            }
+            return appointments;
+        }
+
+        public IEnumerable<Appointment> GetAppointmentsByProviderId(int providerId)
+        {
+            var appointments = appointmentRepository.GetAppointmentsByProviderId(providerId);
+            if (appointments == null || !appointments.Any())
+            {
+                throw new ArgumentException("No appointments found for provider with ID: " + providerId);
+            }
+            return appointments;
+        }
+
+        public IEnumerable<Appointment> GetAppointmentsByClinicId(int clinicId)
+        {
+            var appointments = appointmentRepository.GetAppointmentsByClinicId(clinicId);
+            if (appointments == null || !appointments.Any())
+            {
+                throw new ArgumentException("No appointments found for clinic with ID: " + clinicId);
+            }
+            return appointments;
+        }
     }
 }

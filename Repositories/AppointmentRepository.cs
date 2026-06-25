@@ -37,5 +37,35 @@ namespace ClinicFlow.Repositories
                 .Include(a => a.Provider)
                 .FirstOrDefault(a => a.Id == id);
         }
+
+        public IEnumerable<Appointment> GetAppointmentsByPatientId(int patientId)
+        {
+            return context.Appointments
+                .Include(a => a.Patient)
+                .Include(a => a.Clinic)
+                .Include(a => a.Provider)
+                .Where(a => a.PatientId == patientId)
+                .ToList();
+        }
+
+        public IEnumerable<Appointment> GetAppointmentsByProviderId(int providerId)
+        {
+            return context.Appointments
+                .Include(a => a.Patient)
+                .Include(a => a.Clinic)
+                .Include(a => a.Provider)
+                .Where(a => a.ProviderId == providerId)
+                .ToList();
+        }
+
+        public IEnumerable<Appointment> GetAppointmentsByClinicId(int clinicId)
+        {
+            return context.Appointments
+                .Include(a => a.Patient)
+                .Include(a => a.Clinic)
+                .Include(a => a.Provider)
+                .Where(a => a.ClinicId == clinicId)
+                .ToList();
+        }
     }
 }

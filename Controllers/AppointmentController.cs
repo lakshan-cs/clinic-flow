@@ -63,5 +63,23 @@ namespace ClinicFlow.Controllers
         {
             return appointmentService.GetAppointments();
         }
+
+        [HttpGet("patient/{patientId}")]
+        public IEnumerable<Appointment> GetAppointmentsByPatientId(int patientId)
+        {
+            return appointmentService.GetAppointmentsByPatientId(patientId);
+        }
+
+        [HttpGet("provider/{providerId}")]
+        public IEnumerable<Appointment> GetAppointmentsByProviderId(int providerId)
+        {
+            return appointmentService.GetAppointmentsByProviderId(providerId);
+        }
+
+        [HttpGet("clinic/{clinicId}")]
+        public IEnumerable<Appointment> GetAppointmentsByClinicId(int clinicId)
+        {
+            return appointmentService.GetAppointmentsByClinicId(clinicId);
+        }
     }
 }
