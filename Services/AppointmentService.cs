@@ -16,10 +16,22 @@ namespace ClinicFlow.Services
 
         public void AddAppointment(Appointment appointment)
         {
+            var startTime = appointment.DateTime;
+            var endTime = startTime.AddMinutes(20);
+
+            var openingTime = startTime.Date.AddHours(8);
+            var closingTime = startTime.Date.AddHours(16);
+
+            if (startTime < openingTime || endTime > closingTime)
+            {
+                throw new AppointmentConflictException(
+                    "Appointment must be between 08:00 and 16:00.");
+            }
+
             var appointments = appointmentRepository.GetAppointmentsByProviderId(appointment.ProviderId);
             if (appointments != null && appointments.Any(a => a.DateTime == appointment.DateTime))
             {
-                throw new DuplicateResourceException("Provider already has an appointment at this time.");
+                throw new AppointmentConflictException("Provider already has an appointment at this time.");
             }
             appointmentRepository.AddAppointment(appointment);
         }
