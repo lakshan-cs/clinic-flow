@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import Sidebar from '../components/Sidebar';
 import OverviewCards from '../components/OverviewCards';
 import Charts from '../components/Charts';
-import { getAllTasks } from '../services/taskService';
 import { getCurrentUser, removeUser } from '../services/authService';
 import styles from '../styles/Dashboard.module.css';
 

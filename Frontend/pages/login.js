@@ -83,6 +83,7 @@ export default function Login() {
         <div className={styles.loginContent}>
           <div className={styles.loginHeader}>
             <h1>Login</h1>
+            <p>Welcome back. Please sign in to continue.</p>
           </div>
 
           <form className={styles.loginForm} onSubmit={handleSubmit}>
