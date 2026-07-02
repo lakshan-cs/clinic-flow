@@ -1,0 +1,882 @@
+/* All Tasks Page Styles */
+.allTasksPage {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f6fa;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+}
+
+.dashboardContainer {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f6fa;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+}
+
+.main {
+  flex: 1;
+  padding: 30px;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.mainExpanded {
+  margin-left: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  gap: 20px;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.headerLeft h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.pageTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.headerLeft p {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #777;
+  margin: 4px 0 0 0;
+}
+
+.menuBtn {
+  padding: 10px;
+  background: #fff;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.menuBtn:hover {
+  background: #f7f8fa;
+  border-color: #6c63ff;
+}
+
+.hamburgerIcon {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 20px;
+}
+
+.hamburgerIcon span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #444;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+.headerRight {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #fff;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 10px;
+  min-width: 300px;
+  transition: border 0.2s;
+}
+
+.searchBar:focus-within {
+  border-color: #6c63ff;
+}
+
+.searchIcon {
+  color: #999;
+}
+
+.searchInput {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 1rem;
+  color: #222;
+  width: 100%;
+}
+
+.searchInput::placeholder {
+  color: #bbb;
+}
+
+.refreshBtn {
+  padding: 10px 18px;
+  background: #fff;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #444;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.refreshBtn:hover {
+  background: #f7f8fa;
+  border-color: #6c63ff;
+}
+
+.addTaskBtn {
+  padding: 10px 18px;
+  background: #6c63ff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+
+.addTaskBtn:hover {
+  background: #5a52d5;
+}
+
+/* Sorting Container */
+.sortingContainer {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.sortingLabel {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.sortingButtons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sortBtn {
+  padding: 8px 16px;
+  background: #f7f8fa;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sortBtn:hover {
+  background: #fff;
+  border-color: #6c63ff;
+  color: #6c63ff;
+}
+
+.sortActive {
+  background: #6c63ff;
+  color: #fff;
+  border-color: #6c63ff;
+}
+
+.sortActive:hover {
+  background: #5a52d5;
+  border-color: #5a52d5;
+}
+
+.resultCount {
+  font-size: 0.92rem;
+  color: #777;
+  font-weight: 500;
+}
+
+/* Filters Container */
+.filtersContainer {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+}
+
+.filterSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+.priorityFilterSection {
+  margin-left: auto;
+}
+
+.filterLabel {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #444;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.filterButtons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filterBtn {
+  padding: 8px 16px;
+  background: #f7f8fa;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filterBtn:hover {
+  background: #fff;
+  border-color: #6c63ff;
+  color: #6c63ff;
+}
+
+.filterActive {
+  background: #6c63ff;
+  color: #fff;
+  border-color: #6c63ff;
+}
+
+.filterActive:hover {
+  background: #5a52d5;
+  border-color: #5a52d5;
+}
+
+/* Date Filter Section (Legacy - keeping for backward compatibility) */
+.dateFilterSection {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.dateFilterLabel {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dateFilterButtons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.dateFilterBtn {
+  padding: 8px 16px;
+  background: #f7f8fa;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dateFilterBtn:hover {
+  background: #fff;
+  border-color: #6c63ff;
+  color: #6c63ff;
+}
+
+.dateFilterActive {
+  background: #6c63ff;
+  color: #fff;
+  border-color: #6c63ff;
+}
+
+.dateFilterActive:hover {
+  background: #5a52d5;
+  border-color: #5a52d5;
+}
+
+.countBadge {
+  background: rgba(255, 255, 255, 0.3);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+}
+
+.dateFilterActive .countBadge {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.content {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+}
+
+.tasksList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Tasks Grid */
+.tasksGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.taskCard {
+  background: #fff;
+  border-radius: 12px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s;
+  border: 1.5px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  overflow: hidden;
+}
+
+.taskCard:hover {
+  border-color: #6c63ff;
+  box-shadow: 0 4px 16px rgba(108, 99, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.taskCardHeader {
+  padding: 20px 20px 12px 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.taskInfo {
+  flex: 1;
+}
+
+.taskTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.priorityBadgeContainer {
+  padding: 0 20px 12px 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.taskDescription {
+  font-size: 0.95rem;
+  color: #666;
+  margin: 0;
+  line-height: 1.6;
+  padding: 16px 20px;
+  min-height: 80px;
+}
+
+.taskFooter {
+  padding: 12px 20px;
+  background: #f9fafb;
+  border-top: 1px solid #f0f0f0;
+}
+
+.taskMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.92rem;
+  color: #777;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.statusPending {
+  background: #fff4e5;
+  color: #ff9800;
+}
+
+.statusInProgress {
+  background: #e3f2fd;
+  color: #2196f3;
+}
+
+.statusCompleted {
+  background: #e8f5e9;
+  color: #4caf50;
+}
+
+.priorityBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.dueDate {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.overdueDate {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.overdueLabel {
+  margin-left: 6px;
+  padding: 2px 8px;
+  background: #fef2f2;
+  color: #dc2626;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.priorityLow {
+  background: #e8f5e9;
+  color: #4caf50;
+}
+
+.priorityMedium {
+  background: #fff4e5;
+  color: #ff9800;
+}
+
+.priorityHigh {
+  background: #ffebee;
+  color: #f44336;
+}
+
+.taskActions {
+  display: flex;
+  gap: 8px;
+}
+
+.actionBtn {
+  padding: 8px 12px;
+  background: #fff;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #444;
+  transition: all 0.2s;
+}
+
+.actionBtn:hover {
+  border-color: #6c63ff;
+  background: #f7f8fa;
+}
+
+.deleteBtn {
+  color: #C51B1B;
+}
+
+.deleteBtn:hover {
+  border-color: #C51B1B;
+  background: #ffebee;
+}
+
+/* Task Actions Bottom */
+.taskActionsBottom {
+  display: flex;
+  gap: 10px;
+  padding: 16px 20px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.actionBtnBottom {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.editBtnBottom {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.editBtnBottom:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.deleteBtnBottom {
+  background: #ef4444;
+  color: #fff;
+}
+
+.deleteBtnBottom:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f0f0f0;
+  border-top-color: #6c63ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loadingContainer p {
+  font-size: 1rem;
+  color: #777;
+  margin: 0;
+}
+
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.errorMessage {
+  font-size: 1rem;
+  color: #dc2626;
+  margin: 0 0 16px 0;
+}
+
+.retryBtn {
+  padding: 10px 20px;
+  background: #6c63ff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.retryBtn:hover {
+  background: #5a52d5;
+}
+
+.noTasks {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.noTasks p {
+  font-size: 1.1rem;
+  color: #999;
+  margin: 0;
+}
+
+/* Pagination Container */
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 32px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.paginationBtn {
+  padding: 10px 20px;
+  background: #fff;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #444;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.paginationBtn:hover:not(:disabled) {
+  background: #f7f8fa;
+  border-color: #6c63ff;
+  color: #6c63ff;
+}
+
+.paginationBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.paginationNumbers {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.paginationNumber {
+  padding: 8px 14px;
+  background: #f7f8fa;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 40px;
+  text-align: center;
+}
+
+.paginationNumber:hover {
+  background: #fff;
+  border-color: #6c63ff;
+  color: #6c63ff;
+}
+
+.paginationActive {
+  background: #6c63ff;
+  color: #fff;
+  border-color: #6c63ff;
+}
+
+.paginationActive:hover {
+  background: #5a52d5;
+  border-color: #5a52d5;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.1rem;
+  color: #777;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.emptyState p {
+  font-size: 1.1rem;
+  color: #999;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 20px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .headerRight {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .taskCard {
+    flex-direction: column;
+  }
+
+  .taskActions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .tasksGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .searchBar {
+    min-width: 100%;
+  }
+
+  .taskActionsBottom {
+    flex-direction: column;
+  }
+
+  .actionBtnBottom {
+    width: 100%;
+  }
+
+  .filtersContainer {
+    padding: 16px;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .filterSection {
+    width: 100%;
+  }
+
+  .priorityFilterSection {
+    margin-left: 0;
+  }
+
+  .filterButtons {
+    gap: 6px;
+  }
+
+  .filterBtn {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+  }
+
+  .sortingContainer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sortBtn {
+    font-size: 0.85rem;
+    padding: 7px 12px;
+  }
+
+  .paginationContainer {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .paginationBtn {
+    font-size: 0.85rem;
+    padding: 8px 14px;
+  }
+
+  .paginationNumber {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+    min-width: 36px;
+  }
+}

@@ -1,0 +1,333 @@
+/* Add Task Page Styles */
+.addTaskPage {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f6fa;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+}
+
+.dashboardContainer {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f6fa;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+}
+
+.main {
+  flex: 1;
+  padding: 30px;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainExpanded {
+  margin-left: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  gap: 20px;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.pageTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.header p {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #777;
+  margin: 4px 0 0 0;
+}
+
+.menuBtn {
+  padding: 10px;
+  background: #fff;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.menuBtn:hover {
+  background: #f7f8fa;
+  border-color: #6c63ff;
+}
+
+.hamburgerIcon {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 20px;
+}
+
+.hamburgerIcon span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #444;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex: 1;
+  height: 100%;
+}
+
+.formContainer {
+  background: #fff;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  width: 100%;
+  max-height: 750px;
+  max-width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.taskForm {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  flex: 1;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.formGroup.descriptionGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #444;
+  line-height: 1.33;
+}
+
+.formLabel {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #444;
+  line-height: 1.33;
+}
+
+.required {
+  color: #C51B1B;
+}
+
+.formGroup input,
+.formGroup textarea,
+.formGroup select,
+.formInput,
+.formTextarea,
+.formSelect {
+  width: 100%;
+  padding: 12px 14px;
+  background: #f7f8fa;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #222;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: border 0.2s;
+}
+
+.formGroup textarea {
+  min-height: 100px;
+  max-height: 300px;
+  resize: vertical;
+}
+
+.formGroup.descriptionGroup textarea {
+  min-height: 100px;
+  max-height: 300px;
+}
+
+.formGroup input::placeholder,
+.formGroup textarea::placeholder {
+  color: #bbb;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus,
+.formGroup select:focus {
+  outline: none;
+  border-color: #6c63ff;
+  background: #fff;
+}
+
+.error {
+  border-color: #C51B1B !important;
+}
+
+.errorMessage {
+  padding: 12px 16px;
+  background: #fee2e2;
+  color: #991b1b;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: 1px solid #fecaca;
+}
+
+.successMessage {
+  padding: 12px 16px;
+  background: #d1fae5;
+  color: #065f46;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: 1px solid #a7f3d0;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.formActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.btn {
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.btnPrimary {
+  background: #6c63ff;
+  color: #fff;
+  width: 100%;
+  margin-top: auto;
+}
+
+.btnPrimary:hover {
+  background: #5a52d5;
+}
+
+.btnPrimary:disabled {
+  background: #999;
+  cursor: not-allowed;
+}
+
+.btnSecondary {
+  background: #fff;
+  border: 1.5px solid #e0e0e0;
+  color: #444;
+}
+
+.btnSecondary:hover {
+  background: #f7f8fa;
+  border-color: #6c63ff;
+}
+
+.submitBtn {
+  padding: 12px 24px;
+  background: #6c63ff;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.submitBtn:hover {
+  background: #5a52d5;
+}
+
+.submitBtn:disabled {
+  background: #999;
+  cursor: not-allowed;
+}
+
+.cancelBtn {
+  padding: 12px 24px;
+  background: #fff;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #444;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancelBtn:hover {
+  background: #f7f8fa;
+  border-color: #6c63ff;
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 20px;
+  }
+
+  .formContainer {
+    padding: 24px;
+  }
+
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+
+  .formActions {
+    flex-direction: column;
+  }
+
+  .btn,
+  .btnPrimary,
+  .btnSecondary,
+  .submitBtn,
+  .cancelBtn {
+    width: 100%;
+  }
+}
