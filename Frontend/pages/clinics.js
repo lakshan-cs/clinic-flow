@@ -61,8 +61,8 @@ export default function Clinics() {
   };
 
   const handleSave = async () => {
-    if (!formData.name.trim() || !formData.location.trim()) {
-      toast.warning('Name and location are required');
+    if (!formData.name.trim()) {
+      toast.warning('Name is required');
       return;
     }
     try {

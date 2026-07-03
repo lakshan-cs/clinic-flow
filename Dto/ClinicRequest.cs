@@ -9,6 +9,5 @@ public class ClinicRequest
     [Required]
     public string Name { get; set; } = null!;
 
-    [Required]
     public string Location { get; set; } = null!;
 }
