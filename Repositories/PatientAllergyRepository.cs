@@ -53,7 +53,7 @@ namespace ClinicFlow.Repositories
 
         public void UpdatePatientAllergy(PatientAllergy patientAllergy)
         {
-            context.PatientAllergies.Find(patientAllergy.Id);
+            context.PatientAllergies.Update(patientAllergy);
             context.SaveChanges();
         }
 

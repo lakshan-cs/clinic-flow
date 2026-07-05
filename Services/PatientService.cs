@@ -87,23 +87,73 @@ namespace ClinicFlow.Services
             return patient;
         }
 
-        public void UpdatePatient(Patient patient)
+        public void UpdatePatientWithAllergies(Patient patient, IEnumerable<PatientAllergy> patientAllergies)
         {
-            var existingPatient = patientRepository.GetPatientById(patient.Id);
-
-            if(existingPatient == null)
+            using (var transaction = dbContext.Database.BeginTransaction())
             {
-                throw new NotFoundException("Patient not found with ID: " + patient.Id);
-            }
+                try
+                {
+                    var existingPatient = patientRepository.GetPatientById(patient.Id);
+                    if (existingPatient == null)
+                    {
+                        throw new NotFoundException("Patient not found with ID: " + patient.Id);
+                    }
 
-            existingPatient.FullName = patient.FullName;
-            existingPatient.DateOfBirth = patient.DateOfBirth;
-            existingPatient.Email = patient.Email;
-            existingPatient.PhoneNumber = patient.PhoneNumber;
+                    existingPatient.FullName = patient.FullName;
+                    existingPatient.DateOfBirth = patient.DateOfBirth;
+                    existingPatient.Email = patient.Email;
+                    existingPatient.PhoneNumber = patient.PhoneNumber;
 
-            patientRepository.UpdatePatient(existingPatient);
-  
+                    patientRepository.UpdatePatient(existingPatient);
 
+                    var allergyList = patientAllergies.ToList();
+                    var submittedAllergyIds = allergyList.Select(a => a.AllergyId).ToHashSet();
+
+                    var existingAllergies = patientAllergyRepository
+                        .GetPatientAllergiesByPatientId(patient.Id).ToList();
+
+                    // Remove allergies that are no longer in the submitted list
+                    foreach (var existing in existingAllergies)
+                    {
+                        if (!submittedAllergyIds.Contains(existing.AllergyId))
+                        {
+                            patientAllergyRepository.DeletePatientAllergy(existing.Id);
+                        }
+                    }
+
+                    // Add or update submitted allergies
+                    foreach (var patientAllergy in allergyList)
+                    {
+                        patientAllergy.PatientId = patient.Id;
+
+                        var allergy = allergyRepository.GetAllergyById(patientAllergy.AllergyId);
+                        if (allergy == null)
+                        {
+                            throw new NotFoundException("Allergy not found with ID: " + patientAllergy.AllergyId);
+                        }
+
+                        var existingAllergy = existingAllergies.FirstOrDefault(a => a.AllergyId == patientAllergy.AllergyId);
+
+                        if (existingAllergy != null)
+                        {
+                            existingAllergy.Severity = patientAllergy.Severity;
+                            existingAllergy.Notes = patientAllergy.Notes;
+                            patientAllergyRepository.UpdatePatientAllergy(existingAllergy);
+                        }
+                        else
+                        {
+                            patientAllergyRepository.AddPatientAllergy(patientAllergy);
+                        }
+                    }
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }    
+          
         }
 
         public void DeletePatient(int id)

@@ -10,7 +10,7 @@ public class PatientRequest
     public string FullName { get; set; } = null!;
 
     [Required]
-    public string DateOfBirth { get; set; } = null!;
+    public DateOnly DateOfBirth { get; set; }
 
     [EmailAddress]
     [Required]

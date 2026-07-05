@@ -2,6 +2,7 @@
 using ClinicFlow.Services.Interfaces;
 using ClinicFlow.Models;
 using ClinicFlow.Dto;
+using ClinicFlow.Repositories;
 
 namespace ClinicFlow.Controllers
 {
@@ -39,7 +40,7 @@ namespace ClinicFlow.Controllers
             var patient = new Patient
             {
                 FullName = patientRequest.FullName,
-                DateOfBirth = patientRequest.DateOfBirth,
+                DateOfBirth = patientRequest.DateOfBirth.ToDateTime(TimeOnly.MinValue),
                 Email = patientRequest.Email,
                 PhoneNumber = patientRequest.PhoneNumber
             };
@@ -62,7 +63,7 @@ namespace ClinicFlow.Controllers
             {
                 Id = patient.Id,
                 FullName = patient.FullName,
-                DateOfBirth = patient.DateOfBirth,
+                DateOfBirth = patient.DateOfBirth?.ToString("yyyy-MM-dd"),
                 Email = patient.Email,
                 PhoneNumber = patient.PhoneNumber
             };
@@ -82,21 +83,32 @@ namespace ClinicFlow.Controllers
             {
                 Id = patientRequest.Id,
                 FullName = patientRequest.FullName,
-                DateOfBirth = patientRequest.DateOfBirth,
+                DateOfBirth = patientRequest.DateOfBirth.ToDateTime(TimeOnly.MinValue),
                 Email = patientRequest.Email,
                 PhoneNumber = patientRequest.PhoneNumber
             };
 
-            patientService.UpdatePatient(patient);
+            var patientAllergies = new List<PatientAllergy>();
+            foreach (var allergyRequest in patientRequest.PatientAllergies)
+            {
+                patientAllergies.Add(new PatientAllergy
+                {
+                    AllergyId = allergyRequest.AllergyId,
+                    Severity = allergyRequest.Severity ?? string.Empty,
+                    Notes = allergyRequest.Notes
+                });
+            }
+            patientService.UpdatePatientWithAllergies(patient, patientAllergies);
 
             var patientResponse = new PatientResponse
             {
                 Id = patient.Id,
                 FullName = patient.FullName,
-                DateOfBirth = patient.DateOfBirth,
+                DateOfBirth = patient.DateOfBirth?.ToString("yyyy-MM-dd"),
                 Email = patient.Email,
                 PhoneNumber = patient.PhoneNumber
             };
+
             return Ok(patientResponse);
         }
 

@@ -11,7 +11,7 @@ public class Patient
     [Column("FULL_NAME")]
     public string? FullName { get; set; }
     [Column("DOB")]
-    public string? DateOfBirth { get; set; }
+    public DateTime? DateOfBirth { get; set; }
     [Column("EMAIL")]
     public string? Email { get; set; }
     [Column("PHONE_NUMBER")]

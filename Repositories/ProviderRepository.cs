@@ -20,7 +20,7 @@ namespace ClinicFlow.Repositories
                 .ToList();
         }
 
-        public Provider GetProviderById(int id)
+        public Provider? GetProviderById(int id)
         {
             return context.Providers
                 .Include(p => p.Clinic)

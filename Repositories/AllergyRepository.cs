@@ -17,7 +17,7 @@ namespace ClinicFlow.Repositories
             return context.Allergies.ToList();
         }
 
-        public Allergy GetAllergyById(int id)
+        public Allergy? GetAllergyById(int id)
         {
             return context.Allergies.Find(id);
         }
