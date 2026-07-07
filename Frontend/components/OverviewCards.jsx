@@ -1,32 +1,40 @@
 import React from 'react';
-import { Clock, ListTodo, CheckCircle } from 'lucide-react';
+import { Users, Building2, Stethoscope, CalendarCheck } from 'lucide-react';
 import styles from './OverviewCards.module.css';
 
-const OverviewCards = ({ pendingTasks = 0, inProgressTasks = 0, completedTasks = 0, isLoading = false }) => {
+const OverviewCards = ({ totalPatients = 0, totalClinics = 0, totalProviders = 0, totalAppointments = 0, isLoading = false }) => {
   const cardsData = [
     {
       id: 1,
-      title: 'Pending Tasks',
-      value: pendingTasks,
-      trend: 'Waiting to start',
-      icon: Clock,
-      colorClass: styles.cardOrange
-    },
-    {
-      id: 2,
-      title: 'In Progress Tasks',
-      value: inProgressTasks,
-      trend: 'Currently working',
-      icon: ListTodo,
+      title: 'Total Patients',
+      value: totalPatients,
+      trend: 'Registered patients',
+      icon: Users,
       colorClass: styles.cardBlue
     },
     {
-      id: 3,
-      title: 'Completed Tasks',
-      value: completedTasks,
-      trend: 'Successfully finished',
-      icon: CheckCircle,
+      id: 2,
+      title: 'Total Clinics',
+      value: totalClinics,
+      trend: 'Active clinics',
+      icon: Building2,
       colorClass: styles.cardGreen
+    },
+    {
+      id: 3,
+      title: 'Total Providers',
+      value: totalProviders,
+      trend: 'Healthcare providers',
+      icon: Stethoscope,
+      colorClass: styles.cardOrange
+    },
+    {
+      id: 4,
+      title: 'Total Appointments',
+      value: totalAppointments,
+      trend: 'Scheduled appointments',
+      icon: CalendarCheck,
+      colorClass: styles.cardPurple
     }
   ];
 

@@ -76,6 +76,7 @@ export default function Appointments() {
     if (!formData.providerId) { toast.warning('Provider is required'); return false; }
     if (!formData.date) { toast.warning('Appointment date is required'); return false; }
     if (!formData.time) { toast.warning('Appointment time is required'); return false; }
+    return true;
   };
 
   const handleSave = async () => {
@@ -175,7 +176,7 @@ export default function Appointments() {
                     <td>{getProviderName(appt.providerId)}</td>
                     <td>{formatDateTime(appt.dateTime)}</td>
                     <td className={appt.reason ? styles.reasonCell : styles.noReason}>
-                      {appt.reason || 'N/A'}
+                      {appt.reason || '—'}
                     </td>
                   </tr>
                 ))}

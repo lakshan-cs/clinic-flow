@@ -258,8 +258,117 @@
   background: #5a52d5;
 }
 
+/* Admin Profile */
+.profileArea {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 8px 16px 8px 8px;
+  cursor: default;
+}
+
+.profileAvatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #6c63ff;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.profileName {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #222;
+  line-height: 1.2;
+}
+
+.profileRole {
+  font-size: 0.75rem;
+  color: #999;
+  font-weight: 500;
+}
+
+/* Today's Appointments Table */
+.tableCard {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+}
+
+.tableTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 20px 0;
+}
+
+.tableEmpty {
+  text-align: center;
+  color: #999;
+  font-size: 0.95rem;
+  padding: 40px 0;
+  margin: 0;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.table thead tr {
+  background: #f5f6fa;
+  border-bottom: 2px solid #e8e8e8;
+}
+
+.table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #777;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 13px 16px;
+  color: #333;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: middle;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background: #fafafa;
+}
+
 @media (max-width: 768px) {
-  .main {
+  .content {
     padding: 20px;
   }
 
