@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Pencil, Trash2, Plus, Menu } from 'lucide-react';
+import { Pencil, Trash2, Plus, Menu, Search } from 'lucide-react';
 import { toast } from 'react-toastify';
 import Sidebar from '../components/Sidebar';
 import { getAllClinics, createClinic, updateClinic, deleteClinic } from '../services/clinicService';
@@ -22,6 +22,7 @@ export default function Clinics() {
   // Delete confirm state
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [clinicToDelete, setClinicToDelete] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetchClinics();
@@ -100,6 +101,15 @@ export default function Clinics() {
     }
   };
 
+  const filteredClinics = clinics.filter(c => {
+    const q = searchQuery.toLowerCase();
+    if (!q) return true;
+    return (
+      (c.name || '').toLowerCase().includes(q) ||
+      (c.location || '').toLowerCase().includes(q)
+    );
+  });
+
   return (
     <div className={styles.pageContainer}>
       <Sidebar isOpen={isSidebarOpen} activePage="clinics" onLogout={handleLogout} />
@@ -116,18 +126,30 @@ export default function Clinics() {
               <p className={styles.pageSubtitle}>Manage clinic locations</p>
             </div>
           </div>
-          <button className={styles.addBtn} onClick={openAddModal}>
-            <Plus size={18} />
-            Add Clinic
-          </button>
+          <div className={styles.headerRight}>
+            <div className={styles.searchBar}>
+              <Search size={16} className={styles.searchIcon} />
+              <input
+                type="text"
+                placeholder="Search clinics..."
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                className={styles.searchInput}
+              />
+            </div>
+            <button className={styles.addBtn} onClick={openAddModal}>
+              <Plus size={18} />
+              Add Clinic
+            </button>
+          </div>
         </div>
 
         {/* Table */}
         <div className={styles.tableCard}>
           {isLoading ? (
             <div className={styles.emptyState}>Loading clinics...</div>
-          ) : clinics.length === 0 ? (
-            <div className={styles.emptyState}>No clinics found. Add one to get started.</div>
+          ) : filteredClinics.length === 0 ? (
+            <div className={styles.emptyState}>{clinics.length === 0 ? 'No clinics found. Add one to get started.' : 'No clinics match your search.'}</div>
           ) : (
             <table className={styles.table}>
               <thead>
@@ -138,7 +160,7 @@ export default function Clinics() {
                 </tr>
               </thead>
               <tbody>
-                {clinics.map((clinic) => (
+                {filteredClinics.map((clinic) => (
                   <tr key={clinic.id}>
                     <td>{clinic.name}</td>
                     <td>{clinic.location}</td>

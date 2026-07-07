@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Pencil, Trash2, Plus, Menu, X } from 'lucide-react';
+import { Pencil, Trash2, Plus, Menu, X, Search } from 'lucide-react';
 import { toast } from 'react-toastify';
 import Sidebar from '../components/Sidebar';
 import { getAllPatients, createPatient, updatePatient, deletePatient } from '../services/patientService';
@@ -36,6 +36,7 @@ export default function Patients() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [patientToDelete, setPatientToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetchPatients();
@@ -200,6 +201,17 @@ export default function Patients() {
     a => !formData.allergies.find(sel => sel.allergyId === a.id)
   );
 
+  const filteredPatients = patients.filter(p => {
+    const q = searchQuery.toLowerCase();
+    if (!q) return true;
+    return (
+      (p.fullName || '').toLowerCase().includes(q) ||
+      (p.email || '').toLowerCase().includes(q) ||
+      (p.phoneNumber || '').toLowerCase().includes(q) ||
+      (p.dateOfBirth || '').toLowerCase().includes(q)
+    );
+  });
+
   return (
     <div className={styles.pageContainer}>
       <Sidebar isOpen={isSidebarOpen} activePage="patients" onLogout={handleLogout} />
@@ -216,18 +228,30 @@ export default function Patients() {
               <p className={styles.pageSubtitle}>Manage patient records</p>
             </div>
           </div>
-          <button className={styles.addBtn} onClick={openAddModal}>
-            <Plus size={18} />
-            Add Patient
-          </button>
+          <div className={styles.headerRight}>
+            <div className={styles.searchBar}>
+              <Search size={16} className={styles.searchIcon} />
+              <input
+                type="text"
+                placeholder="Search patients..."
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                className={styles.searchInput}
+              />
+            </div>
+            <button className={styles.addBtn} onClick={openAddModal}>
+              <Plus size={18} />
+              Add Patient
+            </button>
+          </div>
         </div>
 
         {/* Table */}
         <div className={styles.tableCard}>
           {isLoading ? (
             <div className={styles.emptyState}>Loading patients...</div>
-          ) : patients.length === 0 ? (
-            <div className={styles.emptyState}>No patients found. Add one to get started.</div>
+          ) : filteredPatients.length === 0 ? (
+            <div className={styles.emptyState}>{patients.length === 0 ? 'No patients found. Add one to get started.' : 'No patients match your search.'}</div>
           ) : (
             <table className={styles.table}>
               <thead>
@@ -240,7 +264,7 @@ export default function Patients() {
                 </tr>
               </thead>
               <tbody>
-                {patients.map((patient) => (
+                {filteredPatients.map((patient) => (
                   <tr key={patient.id}>
                     <td>{patient.fullName}</td>
                     <td>{patient.dateOfBirth ? patient.dateOfBirth.split('T')[0] : ''}</td>

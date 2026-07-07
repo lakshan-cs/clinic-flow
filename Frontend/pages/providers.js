@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Pencil, Trash2, Plus, Menu } from 'lucide-react';
+import { Pencil, Trash2, Plus, Menu, Search } from 'lucide-react';
 import { toast } from 'react-toastify';
 import Sidebar from '../components/Sidebar';
 import { getAllProviders, createProvider, updateProvider, deleteProvider } from '../services/providerService';
@@ -24,6 +24,7 @@ export default function Providers() {
   // Delete confirm state
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [providerToDelete, setProviderToDelete] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetchProviders();
@@ -118,6 +119,16 @@ export default function Providers() {
     }
   };
 
+  const filteredProviders = providers.filter(p => {
+    const q = searchQuery.toLowerCase();
+    if (!q) return true;
+    return (
+      (p.name || '').toLowerCase().includes(q) ||
+      (p.speciality || '').toLowerCase().includes(q) ||
+      getClinicName(p.clinicId).toLowerCase().includes(q)
+    );
+  });
+
   return (
     <div className={styles.pageContainer}>
       <Sidebar isOpen={isSidebarOpen} activePage="providers" onLogout={handleLogout} />
@@ -134,18 +145,30 @@ export default function Providers() {
               <p className={styles.pageSubtitle}>Manage healthcare providers</p>
             </div>
           </div>
-          <button className={styles.addBtn} onClick={openAddModal}>
-            <Plus size={18} />
-            Add Provider
-          </button>
+          <div className={styles.headerRight}>
+            <div className={styles.searchBar}>
+              <Search size={16} className={styles.searchIcon} />
+              <input
+                type="text"
+                placeholder="Search providers..."
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                className={styles.searchInput}
+              />
+            </div>
+            <button className={styles.addBtn} onClick={openAddModal}>
+              <Plus size={18} />
+              Add Provider
+            </button>
+          </div>
         </div>
 
         {/* Table */}
         <div className={styles.tableCard}>
           {isLoading ? (
             <div className={styles.emptyState}>Loading providers...</div>
-          ) : providers.length === 0 ? (
-            <div className={styles.emptyState}>No providers found. Add one to get started.</div>
+          ) : filteredProviders.length === 0 ? (
+            <div className={styles.emptyState}>{providers.length === 0 ? 'No providers found. Add one to get started.' : 'No providers match your search.'}</div>
           ) : (
             <table className={styles.table}>
               <thead>
@@ -157,7 +180,7 @@ export default function Providers() {
                 </tr>
               </thead>
               <tbody>
-                {providers.map((provider) => (
+                {filteredProviders.map((provider) => (
                   <tr key={provider.id}>
                     <td>{provider.name}</td>
                     <td>{provider.speciality}</td>

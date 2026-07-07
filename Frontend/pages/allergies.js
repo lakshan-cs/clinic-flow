@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Pencil, Trash2, Plus, Menu } from 'lucide-react';
+import { Pencil, Trash2, Plus, Menu, Search } from 'lucide-react';
 import { toast } from 'react-toastify';
 import Sidebar from '../components/Sidebar';
 import { getAllAllergies, createAllergy, updateAllergy, deleteAllergy } from '../services/allergyService';
@@ -22,6 +22,7 @@ export default function Allergies() {
   // Delete confirm state
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [allergyToDelete, setAllergyToDelete] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetchAllergies();
@@ -100,6 +101,12 @@ export default function Allergies() {
     }
   };
 
+  const filteredAllergies = allergies.filter(a => {
+    const q = searchQuery.toLowerCase();
+    if (!q) return true;
+    return (a.allergyType || '').toLowerCase().includes(q);
+  });
+
   return (
     <div className={styles.pageContainer}>
       <Sidebar isOpen={isSidebarOpen} activePage="allergies" onLogout={handleLogout} />
@@ -116,18 +123,30 @@ export default function Allergies() {
               <p className={styles.pageSubtitle}>Manage allergy types</p>
             </div>
           </div>
-          <button className={styles.addBtn} onClick={openAddModal}>
-            <Plus size={18} />
-            Add Allergy
-          </button>
+          <div className={styles.headerRight}>
+            <div className={styles.searchBar}>
+              <Search size={16} className={styles.searchIcon} />
+              <input
+                type="text"
+                placeholder="Search allergies..."
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                className={styles.searchInput}
+              />
+            </div>
+            <button className={styles.addBtn} onClick={openAddModal}>
+              <Plus size={18} />
+              Add Allergy
+            </button>
+          </div>
         </div>
 
         {/* Table */}
         <div className={styles.tableCard}>
           {isLoading ? (
             <div className={styles.emptyState}>Loading allergies...</div>
-          ) : allergies.length === 0 ? (
-            <div className={styles.emptyState}>No allergies found. Add one to get started.</div>
+          ) : filteredAllergies.length === 0 ? (
+            <div className={styles.emptyState}>{allergies.length === 0 ? 'No allergies found. Add one to get started.' : 'No allergies match your search.'}</div>
           ) : (
             <table className={styles.table}>
               <thead>
@@ -137,7 +156,7 @@ export default function Allergies() {
                 </tr>
               </thead>
               <tbody>
-                {allergies.map((allergy) => (
+                {filteredAllergies.map((allergy) => (
                   <tr key={allergy.id}>
                     <td>{allergy.allergyType}</td>
                     <td className={styles.actionsCell}>

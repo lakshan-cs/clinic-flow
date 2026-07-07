@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Plus, Menu } from 'lucide-react';
+import { Plus, Menu, Search } from 'lucide-react';
 import { toast } from 'react-toastify';
 import Sidebar from '../components/Sidebar';
 import { getAllAppointments, createAppointment } from '../services/appointmentService';
@@ -30,6 +30,7 @@ export default function Appointments() {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState(emptyForm());
   const [isSaving, setIsSaving] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetchAll();
@@ -129,6 +130,18 @@ export default function Appointments() {
     });
   };
 
+  const filteredAppointments = appointments.filter(appt => {
+    const q = searchQuery.toLowerCase();
+    if (!q) return true;
+    return (
+      getPatientName(appt.patientId).toLowerCase().includes(q) ||
+      getClinicName(appt.clinicId).toLowerCase().includes(q) ||
+      getProviderName(appt.providerId).toLowerCase().includes(q) ||
+      (appt.reason || '').toLowerCase().includes(q) ||
+      formatDateTime(appt.dateTime).toLowerCase().includes(q)
+    );
+  });
+
   return (
     <div className={styles.pageContainer}>
       <Sidebar isOpen={isSidebarOpen} activePage="appointments" onLogout={handleLogout} />
@@ -145,18 +158,30 @@ export default function Appointments() {
               <p className={styles.pageSubtitle}>View and schedule appointments</p>
             </div>
           </div>
-          <button className={styles.addBtn} onClick={openAddModal}>
-            <Plus size={18} />
-            Add Appointment
-          </button>
+          <div className={styles.headerRight}>
+            <div className={styles.searchBar}>
+              <Search size={16} className={styles.searchIcon} />
+              <input
+                type="text"
+                placeholder="Search appointments..."
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                className={styles.searchInput}
+              />
+            </div>
+            <button className={styles.addBtn} onClick={openAddModal}>
+              <Plus size={18} />
+              Add Appointment
+            </button>
+          </div>
         </div>
 
         {/* Table */}
         <div className={styles.tableCard}>
           {isLoading ? (
             <div className={styles.emptyState}>Loading appointments...</div>
-          ) : appointments.length === 0 ? (
-            <div className={styles.emptyState}>No appointments found. Schedule one to get started.</div>
+          ) : filteredAppointments.length === 0 ? (
+            <div className={styles.emptyState}>{appointments.length === 0 ? 'No appointments found. Schedule one to get started.' : 'No appointments match your search.'}</div>
           ) : (
             <table className={styles.table}>
               <thead>
@@ -169,7 +194,7 @@ export default function Appointments() {
                 </tr>
               </thead>
               <tbody>
-                {appointments.map((appt) => (
+                {filteredAppointments.map((appt) => (
                   <tr key={appt.id}>
                     <td>{getPatientName(appt.patientId)}</td>
                     <td>{getClinicName(appt.clinicId)}</td>
