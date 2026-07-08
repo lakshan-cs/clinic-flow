@@ -8,7 +8,7 @@ A RESTful API for clinic management built with ASP.NET Core 10, using Oracle Dat
 - **ORM**: Entity Framework Core 10
 - **Database**: Oracle
 - **Password Hashing**: BCrypt.Net-Next
-- **API Docs**: OpenAPI (Swagger)
+- **API Docs**: Postmans
 
 ## Getting Started
 
@@ -27,7 +27,7 @@ dotnet restore
 dotnet run
 ```
 
-The API runs on `http://localhost:5000` by default.
+The API runs on `http://localhost:5064` by default.
 
 ### Configuration
 
