@@ -8,7 +8,7 @@ A RESTful API for clinic management built with ASP.NET Core 10, using Oracle Dat
 - **ORM**: Entity Framework Core 10
 - **Database**: Oracle
 - **Password Hashing**: BCrypt.Net-Next
-- **API Docs**: Postmans
+- **API Docs**: Postman
 
 ## Getting Started
 
