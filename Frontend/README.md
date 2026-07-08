@@ -1,20 +1,11 @@
-# TaskFlow - Task Management Application
+# ClinicFlow - Frontend
 
-A modern task management application built with Next.js, featuring task tracking, analytics, and user profiles.
-
-## Features
-
-- 📝 Create and manage tasks
-- 📊 Dashboard with analytics and charts
-- ✅ Track task completion
-- 🔍 Search and filter tasks
-- 👤 User profile management
-- 🎨 Clean, responsive UI
+A clinic management web application built with Next.js for managing patients, appointments, providers, clinics, and allergies.
 
 ## Tech Stack
 
-- **Framework**: Next.js 14
-- **UI**: React 18
+- **Framework**: Next.js
+- **UI**: React
 - **Styling**: CSS Modules
 - **HTTP Client**: Axios
 - **Charts**: Recharts
@@ -26,7 +17,7 @@ A modern task management application built with Next.js, featuring task tracking
 ### Prerequisites
 
 - Node.js 18+ installed
-- npm or yarn package manager
+- npm package manager
 
 ### Installation
 
@@ -42,10 +33,10 @@ Open [http://localhost:3000](http://localhost:3000) to view the application.
 
 ### Environment Variables
 
-Create a `.env.local` file in the root directory:
+Create a `.env.local` file in the `Frontend/` directory:
 
 ```env
-NEXT_PUBLIC_API_URL=http://44.217.52.15:8080
+NEXT_PUBLIC_API_URL=http://localhost:5000
 ```
 
 ## Project Structure
@@ -54,9 +45,9 @@ NEXT_PUBLIC_API_URL=http://44.217.52.15:8080
 Frontend/
 ├── pages/              # Next.js pages (file-based routing)
 ├── components/         # Reusable React components
-├── services/          # API service layer
-├── styles/            # CSS Modules
-└── public/            # Static assets
+├── services/           # API service layer
+├── styles/             # CSS Modules
+└── public/             # Static assets
 ```
 
 ## Available Scripts
@@ -64,34 +55,17 @@ Frontend/
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm start` - Start production server
-- `npm run lint` - Run ESLint
 
-## Features Overview
+## Pages
 
-### Authentication
-- User login and signup
-- Session management with localStorage
-
-### Task Management
-- Create, read, update, delete tasks
-- Set priority levels (High, Medium, Low)
-- Set due dates
-- Mark tasks as completed
-
-### Dashboard
-- Overview cards with task statistics
-- Daily completion trend chart
-- Task distribution pie chart
-
-### Filtering & Search
-- Filter by priority
-- Filter by date (Overdue, Today, Upcoming)
-- Search tasks by title or description
+- `/login` - User authentication
+- `/dashboard` - Overview with charts and statistics
+- `/patients` - Manage patient records
+- `/appointments` - View and schedule appointments
+- `/providers` - Manage healthcare providers
+- `/clinics` - Manage clinic locations
+- `/allergies` - Manage allergy types
 
 ## License
 
 This project is private and proprietary.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
