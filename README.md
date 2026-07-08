@@ -77,9 +77,12 @@ dotnet test
 
 ## Assumptions
 
-- A single user role system is in place; authentication is handled via a simple login endpoint returning user info stored in `localStorage`.
+- This is an **administrator-only portal**. There is a single admin user who manages all records — patients, clinics, providers, allergies, and appointments. There is no patient-facing or provider-facing interface.
+- Clinics and providers are predefined, but the admin has full CRUD capability over them — they can be added, updated, or removed as needed.
+- Each provider belongs to exactly **one clinic** (many providers → one clinic). A provider cannot span multiple clinics.
 - Each appointment is tied to exactly one patient, one provider, and one clinic.
-- Providers belong to a clinic; a patient can have multiple allergies via the `PatientAllergy` join entity.
+- A patient can have multiple allergies, managed via the `PatientAllergy` join entity.
+- Authentication is handled via a simple login endpoint; the session is stored in `localStorage`.
 - The Oracle schema already exists — EF Core is used in a database-first style (no migrations are applied on startup).
 - CORS is permissive only for `http://localhost:3000` (the local frontend); production deployment would require updating this.
 
