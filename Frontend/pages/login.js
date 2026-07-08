@@ -73,10 +73,6 @@ export default function Login() {
     alert('Forgot password functionality would be implemented here');
   };
 
-  const handleSignupClick = () => {
-    router.push('/signup');
-  };
-
   return (
     <div className={styles.loginPage}>
       <div className={styles.loginContainer}>
