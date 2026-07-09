@@ -24,8 +24,13 @@ namespace ClinicFlow.Services
 
             if (startTime < openingTime || endTime > closingTime)
             {
-                throw new AppointmentConflictException(
+                throw new InvalidAppointmentException(
                     "Appointment must be between 08:00 and 16:00.");
+            }
+
+            if (appointment.DateTime < DateTime.Now)
+            {
+                throw new InvalidAppointmentException("Appointment cannot be scheduled in the past. Please select a future date and time.");
             }
 
             var appointments = appointmentRepository.GetAppointmentsByProviderId(appointment.ProviderId);

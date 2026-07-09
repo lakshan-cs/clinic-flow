@@ -55,6 +55,10 @@ namespace ClinicFlow.Exceptions
                     statusCode = HttpStatusCode.Conflict;
                     message = exception.Message;
                     break;
+                case InvalidAppointmentException:
+                    statusCode = HttpStatusCode.BadRequest;
+                    message = exception.Message;
+                    break;
             }
 
             context.Response.StatusCode = (int)statusCode;
