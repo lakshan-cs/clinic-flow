@@ -59,6 +59,10 @@ namespace ClinicFlow.Exceptions
                     statusCode = HttpStatusCode.BadRequest;
                     message = exception.Message;
                     break;
+                case ResourceInUseException:
+                    statusCode = HttpStatusCode.BadRequest;
+                    message = exception.Message;
+                    break;
             }
 
             context.Response.StatusCode = (int)statusCode;

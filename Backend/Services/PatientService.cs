@@ -1,4 +1,5 @@
 ﻿using ClinicFlow.Repositories;
+using ClinicFlow.Repositories.Interfaces;
 using ClinicFlow.Models;
 using ClinicFlow.Services.Interfaces;
 using ClinicFlow.Exceptions;
@@ -11,18 +12,21 @@ namespace ClinicFlow.Services
         private readonly IPatientRepository patientRepository;
         private readonly IAllergyRepository allergyRepository;
         private readonly IPatientAllergyRepository patientAllergyRepository;
+        private readonly IAppointmentRepository appointmentRepository;
         private readonly ClinicDbContext dbContext;
 
         public PatientService(
             IPatientRepository patientRepository, 
             IAllergyRepository allergyRepository, 
             IPatientAllergyRepository patientAllergyRepository, 
+            IAppointmentRepository appointmentRepository,
             ClinicDbContext dbContext
             )
         {
             this.patientRepository = patientRepository;
             this.allergyRepository = allergyRepository;
             this.patientAllergyRepository = patientAllergyRepository;
+            this.appointmentRepository = appointmentRepository;
             this.dbContext = dbContext;
         }
         
@@ -162,6 +166,10 @@ namespace ClinicFlow.Services
             if (patient == null)
             {
                 throw new NotFoundException("Patient not found with ID: " + id);
+            } 
+            if (appointmentRepository.GetAppointmentsByPatientId(id).Any())
+            {
+                throw new ResourceInUseException("Cannot delete patient with existing appointments.");
             }
             patientRepository.DeletePatient(id);
         }

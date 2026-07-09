@@ -172,7 +172,8 @@ export default function Patients() {
       setShowModal(false);
       fetchPatients();
     } catch (err) {
-      toast.error(isEditing ? 'Failed to update patient' : 'Failed to add patient');
+      const message = err.response?.data?.error || 'Failed to save patient';
+      toast.error(message);
     } finally {
       setIsSaving(false);
     }
@@ -192,7 +193,8 @@ export default function Patients() {
       setShowDeleteModal(false);
       fetchPatients();
     } catch (err) {
-      toast.error('Failed to delete patient');
+      const message = err.response?.data?.error || 'Failed to delete patient';
+      toast.error(message);
     } finally {
       setIsDeleting(false);
     }
