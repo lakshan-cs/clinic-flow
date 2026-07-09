@@ -146,6 +146,8 @@ export default function Patients() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) { toast.warning('Please enter a valid email address'); return false; }
     if (!formData.phoneNumber.trim()) { toast.warning('Phone Number is required'); return false; }
+    const phoneRegex = /^\+?[\d\s\-().]{7,15}$/;
+    if (!phoneRegex.test(formData.phoneNumber.trim())) { toast.warning('Please enter a valid phone number'); return false; }
     return true;
   };
 
