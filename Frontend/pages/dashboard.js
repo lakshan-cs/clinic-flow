@@ -45,6 +45,7 @@ export default function Dashboard() {
         getAllProviders(),
         getAllAppointments(),
       ]);
+      
       // Find most active clinic by appointment count
       const clinicApptCount = {};
       appointments.forEach(a => {
@@ -58,6 +59,7 @@ export default function Dashboard() {
         }, clinics[0]);
         mostActiveClinic = { name: topClinic.name || topClinic.Name || `Clinic ${topClinic.id}`, count: clinicApptCount[topClinic.id] || 0 };
       }
+
       // Find busiest provider by appointment count
       const providerApptCount = {};
       appointments.forEach(a => {
@@ -71,6 +73,7 @@ export default function Dashboard() {
         }, providers[0]);
         busiestProvider = { name: topProvider.name || topProvider.Name || `Provider ${topProvider.id}`, count: providerApptCount[topProvider.id] || 0 };
       }
+
       // Count upcoming appointments in the next 7 days
       const now = new Date();
       const in7Days = new Date(now);
@@ -129,7 +132,7 @@ export default function Dashboard() {
 
   return (
     <div className={styles.dashboardContainer}>
-      <Sidebar 
+      <Sidebar
         isOpen={isSidebarOpen}
         activePage={activePage}
         onLogout={handleLogout}
@@ -138,19 +141,19 @@ export default function Dashboard() {
       <main className={`${styles.main} ${!isSidebarOpen ? styles.mainExpanded : ''}`}>
         <header className={styles.header}>
           <div className={styles.headerLeft}>
-            <button 
+            <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
               className={styles.menuBtn}
             >
-              <div className={styles.hamburgerIcon}>  
+              <div className={styles.hamburgerIcon}>
                 <span></span>
                 <span></span>
                 <span></span>
-              </div>  
+              </div>
             </button>
             <h1 className={styles.pageTitle}>Dashboard</h1>
           </div>
-          
+
           <div className={styles.headerRight}>
             <div className={styles.profileArea}>
               <div className={styles.profileAvatar}>
