@@ -18,7 +18,7 @@ export default function Dashboard() {
   const [activePage, setActivePage] = useState('dashboard');
   const [currentUser] = useState(() => getCurrentUser());
 
-  const [stats, setStats] = useState({ totalPatients: 0, totalClinics: 0, totalProviders: 0, totalAppointments: 0 });
+  const [stats, setStats] = useState({ mostActiveClinic: { name: 'N/A', count: 0 }, busiestProvider: { name: 'N/A', count: 0 }, upcomingAppointments: 0, totalAppointments: 0 });
   const [chartData, setChartData] = useState({ appointments: [], clinics: [], providers: [] });
   const [patients, setPatients] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -45,10 +45,44 @@ export default function Dashboard() {
         getAllProviders(),
         getAllAppointments(),
       ]);
+      // Find most active clinic by appointment count
+      const clinicApptCount = {};
+      appointments.forEach(a => {
+        const cid = a.clinicId || a.ClinicId;
+        if (cid) clinicApptCount[cid] = (clinicApptCount[cid] || 0) + 1;
+      });
+      let mostActiveClinic = { name: 'N/A', count: 0 };
+      if (clinics.length > 0) {
+        const topClinic = clinics.reduce((best, c) => {
+          return (clinicApptCount[c.id] || 0) > (clinicApptCount[best.id] || 0) ? c : best;
+        }, clinics[0]);
+        mostActiveClinic = { name: topClinic.name || topClinic.Name || `Clinic ${topClinic.id}`, count: clinicApptCount[topClinic.id] || 0 };
+      }
+      // Find busiest provider by appointment count
+      const providerApptCount = {};
+      appointments.forEach(a => {
+        const pid = a.providerId || a.ProviderId;
+        if (pid) providerApptCount[pid] = (providerApptCount[pid] || 0) + 1;
+      });
+      let busiestProvider = { name: 'N/A', count: 0 };
+      if (providers.length > 0) {
+        const topProvider = providers.reduce((best, p) => {
+          return (providerApptCount[p.id] || 0) > (providerApptCount[best.id] || 0) ? p : best;
+        }, providers[0]);
+        busiestProvider = { name: topProvider.name || topProvider.Name || `Provider ${topProvider.id}`, count: providerApptCount[topProvider.id] || 0 };
+      }
+      // Count upcoming appointments in the next 7 days
+      const now = new Date();
+      const in7Days = new Date(now);
+      in7Days.setDate(now.getDate() + 7);
+      const upcomingAppointments = appointments.filter(a => {
+        const d = new Date(a.dateTime || a.DateTime);
+        return d >= now && d <= in7Days;
+      }).length;
       setStats({
-        totalPatients: patients.length,
-        totalClinics: clinics.length,
-        totalProviders: providers.length,
+        mostActiveClinic,
+        busiestProvider,
+        upcomingAppointments,
         totalAppointments: appointments.length,
       });
       setChartData({ appointments, clinics, providers });
@@ -132,9 +166,9 @@ export default function Dashboard() {
 
         <div className={styles.content}>
           <OverviewCards
-            totalPatients={stats.totalPatients}
-            totalClinics={stats.totalClinics}
-            totalProviders={stats.totalProviders}
+            mostActiveClinic={stats.mostActiveClinic}
+            busiestProvider={stats.busiestProvider}
+            upcomingAppointments={stats.upcomingAppointments}
             totalAppointments={stats.totalAppointments}
             isLoading={isLoading}
           />
