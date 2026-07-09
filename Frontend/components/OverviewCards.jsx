@@ -1,38 +1,40 @@
 import React from 'react';
-import { Users, Building2, Stethoscope, CalendarCheck } from 'lucide-react';
+import { Building2, Stethoscope, CalendarCheck } from 'lucide-react';
 import styles from './OverviewCards.module.css';
 
-const OverviewCards = ({ totalPatients = 0, totalClinics = 0, totalProviders = 0, totalAppointments = 0, isLoading = false }) => {
+const OverviewCards = ({ mostActiveClinic = { name: 'N/A', count: 0 }, busiestProvider = { name: 'N/A', count: 0 }, upcomingAppointments = 0, totalAppointments = 0, isLoading = false }) => {
   const cardsData = [
     {
       id: 1,
-      title: 'Total Patients',
-      value: totalPatients,
-      trend: 'Registered patients',
-      icon: Users,
-      colorClass: styles.cardBlue
+      title: 'Most Active Clinic',
+      value: mostActiveClinic.name,
+      trend: `${mostActiveClinic.count} appointment${mostActiveClinic.count !== 1 ? 's' : ''}`,
+      icon: Building2,
+      colorClass: styles.cardBlue,
+      smallValue: true
     },
     {
       id: 2,
-      title: 'Total Clinics',
-      value: totalClinics,
-      trend: 'Active clinics',
-      icon: Building2,
-      colorClass: styles.cardGreen
+      title: 'Busiest Provider',
+      value: busiestProvider.name,
+      trend: `${busiestProvider.count} appointment${busiestProvider.count !== 1 ? 's' : ''}`,
+      icon: Stethoscope,
+      colorClass: styles.cardGreen,
+      smallValue: true
     },
     {
       id: 3,
-      title: 'Total Providers',
-      value: totalProviders,
-      trend: 'Healthcare providers',
-      icon: Stethoscope,
+      title: 'Upcoming Appointments',
+      value: upcomingAppointments,
+      trend: 'Next 7 days',
+      icon: CalendarCheck,
       colorClass: styles.cardOrange
     },
     {
       id: 4,
       title: 'Total Appointments',
       value: totalAppointments,
-      trend: 'Scheduled appointments',
+      trend: 'All scheduled appointments',
       icon: CalendarCheck,
       colorClass: styles.cardPurple
     }
@@ -49,7 +51,7 @@ const OverviewCards = ({ totalPatients = 0, totalClinics = 0, totalProviders = 0
             </div>
             <div className={styles.cardContent}>
               <p className={styles.cardLabel}>{card.title}</p>
-              <h3 className={styles.cardValue}>
+              <h3 className={card.smallValue ? styles.cardValueSmall : styles.cardValue}>
                 {isLoading ? '...' : card.value}
               </h3>
               <p className={styles.cardTrend}>{card.trend}</p>
