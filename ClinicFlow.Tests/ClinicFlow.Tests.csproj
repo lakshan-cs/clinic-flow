@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-	<ProjectReference Include="..\ClinicFlow.csproj" />
+	<ProjectReference Include="..\Backend\ClinicFlow.csproj" />
   </ItemGroup>
 
 </Project>
