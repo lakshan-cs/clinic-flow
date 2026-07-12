@@ -35,6 +35,12 @@ builder.Services.AddScoped<IPatientAllergyService, PatientAllergyService>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 
+builder.Services.AddScoped<IPatientIntakeRepository, PatientIntakeRepository>();
+builder.Services.AddScoped<IPatientIntakeService, PatientIntakeService>();
+
+builder.Services.AddScoped<IPatientSymptomRepository, PatientSymptomRepository>();
+builder.Services.AddScoped<IPatientSymptomService, PatientSymptomService>();
+
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
