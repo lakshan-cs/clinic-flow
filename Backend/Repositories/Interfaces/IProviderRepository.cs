@@ -6,6 +6,7 @@ public interface IProviderRepository
 {
     IEnumerable<Provider> GetProviders();
     IEnumerable<Provider> GetProvidersByClinicId(int clinicId);
+    IEnumerable<Provider> GetProvidersBySpeciality(string speciality);
     Provider? GetProviderById(int id);
     void AddProvider(Provider provider);
     void UpdateProvider(Provider provider);

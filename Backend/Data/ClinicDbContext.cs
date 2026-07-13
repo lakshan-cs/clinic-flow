@@ -18,6 +18,8 @@ namespace ClinicFlow.Data
 
         public DbSet<Allergy> Allergies { get; set; }
 
+        public DbSet<ChiefComplaintSpecialtyLookup> ChiefComplaintSpecialtyLookups { get; set; }
+
         public DbSet<PatientAllergy> PatientAllergies { get; set; }
 
         public DbSet<Appointment> Appointments { get; set; }

@@ -17,8 +17,13 @@ namespace ClinicFlow.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Provider> GetProviders()
+        public IEnumerable<Provider> GetProviders([FromQuery] string? specialty)
         {
+            if (!string.IsNullOrWhiteSpace(specialty))
+            {
+                return providerService.GetProvidersBySpeciality(specialty);
+            }
+
             return providerService.GetProviders();
         }
 

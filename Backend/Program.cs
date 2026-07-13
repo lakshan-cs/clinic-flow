@@ -29,6 +29,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<IAllergyRepository, AllergyRepository>();
 builder.Services.AddScoped<IAllergyService, AllergyService>();
+builder.Services.AddScoped<IChiefComplaintSpecialtyLookupRepository, ChiefComplaintSpecialtyLookupRepository>();
+builder.Services.AddScoped<IChiefComplaintSpecialtyLookupService, ChiefComplaintSpecialtyLookupService>();
 builder.Services.AddScoped<IPatientAllergyRepository, PatientAllergyRepository>();
 builder.Services.AddScoped<IPatientAllergyService, PatientAllergyService>();
 

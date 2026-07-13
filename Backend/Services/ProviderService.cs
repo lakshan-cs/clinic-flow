@@ -36,6 +36,16 @@ namespace ClinicFlow.Services
             return providerRepository.GetProvidersByClinicId(clinicId);
         }
 
+        public IEnumerable<Provider> GetProvidersBySpeciality(string speciality)
+        {
+            var providers = providerRepository.GetProvidersBySpeciality(speciality);
+            if (providers == null || !providers.Any())
+            {
+                throw new NotFoundException("No providers found with speciality: " + speciality);
+            }
+            return providers;
+        }
+
         public Provider GetProvider(int id)
         {
              var provider = providerRepository.GetProviderById(id);

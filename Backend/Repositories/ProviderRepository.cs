@@ -35,6 +35,16 @@ namespace ClinicFlow.Repositories
                 .ToList();
         }
 
+        public IEnumerable<Provider> GetProvidersBySpeciality(string speciality)
+        {
+            var normalizedSpeciality = speciality.Trim().ToUpper();
+
+            return context.Providers
+                .Where(p => p.Speciality != null && p.Speciality.ToUpper() == normalizedSpeciality)
+                .Include(p => p.Clinic)
+                .ToList();
+        }
+
         public void AddProvider(Provider provider)
         {
             context.Providers.Add(provider);
