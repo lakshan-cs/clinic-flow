@@ -18,6 +18,7 @@ namespace ClinicFlow.Controllers
             this.patientIntakeService = patientIntakeService;
         }
 
+        // Add a new patient intake along with associated symptoms
         [HttpPost]
         public ActionResult<PatientIntakeResponse> AddPatientIntake([FromBody] PatientIntakeRequest request)
         {
@@ -55,6 +56,7 @@ namespace ClinicFlow.Controllers
             );
         }
 
+        // Get patient intake by patient ID
         [HttpGet("patient/{patientId}")]
         public ActionResult<PatientIntakeResponse> GetPatientIntakeByPatientId(int patientId)
         {

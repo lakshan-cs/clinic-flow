@@ -15,12 +15,14 @@ namespace ClinicFlow.Controllers
             this.patientAllergyService = patientAllergyService;
         }
 
+        // Get all patient allergies
         [HttpGet]
         public IEnumerable<PatientAllergy> GetPatientAllergies()
         {
             return patientAllergyService.GetPatientAllergies();
         }
 
+        // Get a specific patient allergy by ID
         [HttpGet("{id}")]
         public ActionResult<PatientAllergy> GetPatientAllergy(int id)
         {
@@ -30,16 +32,11 @@ namespace ClinicFlow.Controllers
             return pa;
         }
 
+        // Get patient allergies by patient ID
         [HttpGet("patient/{patientId}")]
         public IEnumerable<PatientAllergy> GetByPatient(int patientId)
         {
             return patientAllergyService.GetPatientAllergiesByPatientId(patientId);
-        }
-
-        [HttpGet("allergy/{allergyId}")]
-        public IEnumerable<PatientAllergy> GetByAllergy(int allergyId)
-        {
-            return patientAllergyService.GetPatientAllergiesByAllergyId(allergyId);
         }
     }
 }

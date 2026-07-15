@@ -15,6 +15,7 @@ namespace ClinicFlow.Controllers
             this.userService = userService;
         }
 
+        // Admin can login to the system with their credentials.
         [HttpPost("login")]
         public ActionResult<LoginResponse> Login([FromBody] LoginRequest loginRequest)
         {

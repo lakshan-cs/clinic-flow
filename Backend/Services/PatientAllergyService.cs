@@ -8,27 +8,14 @@ namespace ClinicFlow.Services
     public class PatientAllergyService : IPatientAllergyService
     {
         private readonly IPatientAllergyRepository patientAllergyRepository;
-        private readonly IPatientRepository patientRepository;
-        private readonly IAllergyRepository allergyRepository;
 
-        public PatientAllergyService(
-            IPatientAllergyRepository patientAllergyRepository,
-            IPatientRepository patientRepository,
-            IAllergyRepository allergyRepository)
+        public PatientAllergyService(IPatientAllergyRepository patientAllergyRepository)
         {
             this.patientAllergyRepository = patientAllergyRepository;
-            this.patientRepository = patientRepository;
-            this.allergyRepository = allergyRepository;
         }
 
         public void AddPatientAllergy(PatientAllergy patientAllergy)
         {
-            if (patientRepository.GetPatientById(patientAllergy.PatientId) == null)
-                throw new NotFoundException("Patient not found with ID: " + patientAllergy.PatientId);
-
-            if (allergyRepository.GetAllergyById(patientAllergy.AllergyId) == null)
-                throw new NotFoundException("Allergy not found with ID: " + patientAllergy.AllergyId);
-
             patientAllergyRepository.AddPatientAllergy(patientAllergy);
         }
 
@@ -47,16 +34,7 @@ namespace ClinicFlow.Services
 
         public IEnumerable<PatientAllergy> GetPatientAllergiesByPatientId(int patientId)
         {
-            if (patientRepository.GetPatientById(patientId) == null)
-                throw new NotFoundException("Patient not found with ID: " + patientId);
             return patientAllergyRepository.GetPatientAllergiesByPatientId(patientId);
-        }
-
-        public IEnumerable<PatientAllergy> GetPatientAllergiesByAllergyId(int allergyId)
-        {
-            if (allergyRepository.GetAllergyById(allergyId) == null)
-                throw new NotFoundException("Allergy not found with ID: " + allergyId);
-            return patientAllergyRepository.GetPatientAllergiesByAllergyId(allergyId);
         }
 
         public void UpdatePatientAllergy(PatientAllergy patientAllergy)

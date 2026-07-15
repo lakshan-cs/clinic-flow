@@ -15,7 +15,9 @@ namespace ClinicFlow.Controllers
         {
             this.patientSymptomService = patientSymptomService;
         }
+        
 
+        // Get patient symptoms by patient intake ID
         [HttpGet("intake/{patientIntakeId}")]
         public ActionResult<IEnumerable<PatientSymptomResponse>> GetPatientSymptomsByPatientIntakeId(int patientIntakeId)
         {

@@ -22,5 +22,10 @@ namespace ClinicFlow.Services
 
             return patientSymptoms;
         }
+
+        public void AddPatientSymptom(PatientSymptom patientSymptom)
+        {
+            patientSymptomRepository.AddPatientSymptom(patientSymptom);
+        }
     }
 }

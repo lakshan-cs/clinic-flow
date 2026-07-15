@@ -17,12 +17,14 @@ namespace ClinicFlow.Controllers
             this.patientService = patientService;
         }
 
+        // Get all patients
         [HttpGet]
         public IEnumerable<Patient> GetPatients()
         {
             return patientService.GetPatients();
         }
 
+        // Get a specific patient by ID
         [HttpGet("{id}")]
         public ActionResult<Patient> GetPatient(int id)
         {
@@ -34,6 +36,7 @@ namespace ClinicFlow.Controllers
             return patient;
         }
 
+        // Add a new patient
         [HttpPost]
         public ActionResult<PatientResponse> AddPatient([FromBody] PatientRequest patientRequest)
         {
@@ -76,6 +79,7 @@ namespace ClinicFlow.Controllers
 
         }
 
+        // Update an existing patient
         [HttpPut]
         public ActionResult<PatientResponse> UpdatePatient([FromBody] PatientRequest patientRequest)
         {
@@ -112,6 +116,7 @@ namespace ClinicFlow.Controllers
             return Ok(patientResponse);
         }
 
+        // Delete a patient by ID
         [HttpDelete("{id}")]
         public void DeletePatient(int id)
         {

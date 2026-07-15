@@ -8,6 +8,7 @@ namespace ClinicFlow.Services
     public class ClinicService : IClinicService
     {
         private readonly IClinicRepository clinicRepository;
+
         public ClinicService(IClinicRepository clinicRepository)
         {
             this.clinicRepository = clinicRepository;
@@ -25,12 +26,12 @@ namespace ClinicFlow.Services
 
         public Clinic GetClinic(int id)
         {
-             var clinic = clinicRepository.GetClinicById(id);
-             if (clinic == null)
-             {
-                 throw new NotFoundException("Clinic not found with ID: " + id);
-             }
-             return clinic;
+            var clinic = clinicRepository.GetClinicById(id);
+            if (clinic == null)
+            {
+                throw new NotFoundException("Clinic not found with ID: " + id);
+            }
+            return clinic;
         }
 
         public void UpdateClinic(Clinic clinic)
@@ -40,7 +41,7 @@ namespace ClinicFlow.Services
             {
                 throw new NotFoundException("Clinic not found with ID: " + clinic.Id);
             }
-            
+
             existingClinic.Name = clinic.Name;
             existingClinic.Location = clinic.Location;
 

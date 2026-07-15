@@ -10,23 +10,20 @@ namespace ClinicFlow.Services
     public class PatientService : IPatientService
     {
         private readonly IPatientRepository patientRepository;
-        private readonly IAllergyRepository allergyRepository;
-        private readonly IPatientAllergyRepository patientAllergyRepository;
-        private readonly IAppointmentRepository appointmentRepository;
+        private readonly IPatientAllergyService patientAllergyService;
+        private readonly IAppointmentService appointmentService;
         private readonly ClinicDbContext dbContext;
 
         public PatientService(
             IPatientRepository patientRepository, 
-            IAllergyRepository allergyRepository, 
-            IPatientAllergyRepository patientAllergyRepository, 
-            IAppointmentRepository appointmentRepository,
+            IPatientAllergyService patientAllergyService, 
+            IAppointmentService appointmentService,
             ClinicDbContext dbContext
             )
         {
             this.patientRepository = patientRepository;
-            this.allergyRepository = allergyRepository;
-            this.patientAllergyRepository = patientAllergyRepository;
-            this.appointmentRepository = appointmentRepository;
+            this.patientAllergyService = patientAllergyService;
+            this.appointmentService = appointmentService;
             this.dbContext = dbContext;
         }
         
@@ -48,14 +45,8 @@ namespace ClinicFlow.Services
                     // Now add the allergies for the patient
                     foreach (var patientAllergy in patientAllergies)
                     {
-                        // Ensure the allergy exists
-                        var allergy = allergyRepository.GetAllergyById(patientAllergy.AllergyId);
-                        if (allergy == null)
-                        {
-                            throw new NotFoundException("Allergy not found with ID: " + patientAllergy.AllergyId);
-                        }
                         patientAllergy.PatientId = patient.Id;
-                        IEnumerable<PatientAllergy> allergies = patientAllergyRepository
+                        IEnumerable<PatientAllergy> allergies = patientAllergyService
                             .GetPatientAllergiesByPatientId(patient.Id);
 
                         foreach(var existingAllergy in allergies)
@@ -65,7 +56,7 @@ namespace ClinicFlow.Services
                                 throw new DuplicateResourceException("The patient already has this allergy recorded: " + patientAllergy.AllergyId);
                             }
                         }
-                        patientAllergyRepository.AddPatientAllergy(patientAllergy);
+                        patientAllergyService.AddPatientAllergy(patientAllergy);
                     }
                     transaction.Commit();
                 }
@@ -113,7 +104,7 @@ namespace ClinicFlow.Services
                     var allergyList = patientAllergies.ToList();
                     var submittedAllergyIds = allergyList.Select(a => a.AllergyId).ToHashSet();
 
-                    var existingAllergies = patientAllergyRepository
+                    var existingAllergies = patientAllergyService
                         .GetPatientAllergiesByPatientId(patient.Id).ToList();
 
                     // Remove allergies that are no longer in the submitted list
@@ -121,7 +112,7 @@ namespace ClinicFlow.Services
                     {
                         if (!submittedAllergyIds.Contains(existing.AllergyId))
                         {
-                            patientAllergyRepository.DeletePatientAllergy(existing.Id);
+                            patientAllergyService.DeletePatientAllergy(existing.Id);
                         }
                     }
 
@@ -129,24 +120,17 @@ namespace ClinicFlow.Services
                     foreach (var patientAllergy in allergyList)
                     {
                         patientAllergy.PatientId = patient.Id;
-
-                        var allergy = allergyRepository.GetAllergyById(patientAllergy.AllergyId);
-                        if (allergy == null)
-                        {
-                            throw new NotFoundException("Allergy not found with ID: " + patientAllergy.AllergyId);
-                        }
-
                         var existingAllergy = existingAllergies.FirstOrDefault(a => a.AllergyId == patientAllergy.AllergyId);
 
                         if (existingAllergy != null)
                         {
                             existingAllergy.Severity = patientAllergy.Severity;
                             existingAllergy.Notes = patientAllergy.Notes;
-                            patientAllergyRepository.UpdatePatientAllergy(existingAllergy);
+                            patientAllergyService.UpdatePatientAllergy(existingAllergy);
                         }
                         else
                         {
-                            patientAllergyRepository.AddPatientAllergy(patientAllergy);
+                            patientAllergyService.AddPatientAllergy(patientAllergy);
                         }
                     }
                     transaction.Commit();
@@ -167,7 +151,7 @@ namespace ClinicFlow.Services
             {
                 throw new NotFoundException("Patient not found with ID: " + id);
             } 
-            if (appointmentRepository.GetAppointmentsByPatientId(id).Any())
+            if (appointmentService.GetAppointmentsByPatientId(id).Any())
             {
                 throw new ResourceInUseException("Cannot delete patient with existing appointments.");
             }

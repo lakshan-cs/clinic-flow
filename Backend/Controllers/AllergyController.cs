@@ -16,18 +16,21 @@ namespace ClinicFlow.Controllers
             this.allergyService = allergyService;
         }
 
+        // Get all allergies
         [HttpGet]
         public IEnumerable<Allergy> GetAllergies()
         {
             return allergyService.GetAllergies();
         }
 
+        // Get a specific allergy by ID
         [HttpGet("{id}")]
         public ActionResult<Allergy> GetAllergy(int id)
         {
             return allergyService.GetAllergy(id);
         }
 
+        // Add a new allergy
         [HttpPost]
         public ActionResult<AllergyResponse> AddAllergy([FromBody] AllergyRequest request)
         {
@@ -51,6 +54,7 @@ namespace ClinicFlow.Controllers
             );
         }
 
+        // Update an existing allergy
         [HttpPut]
         public ActionResult<AllergyResponse> UpdateAllergy([FromBody] AllergyRequest request)
         {
@@ -71,6 +75,7 @@ namespace ClinicFlow.Controllers
             return Ok(response);
         }
 
+        // Delete an allergy by ID
         [HttpDelete("{id}")]
         public void DeleteAllergy(int id)
         {

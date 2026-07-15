@@ -8,12 +8,10 @@ namespace ClinicFlow.Services
     public class ProviderService : IProviderService
     {
         private readonly IProviderRepository providerRepository;
-        private readonly IClinicRepository ClinicRepository;
 
-        public ProviderService(IProviderRepository providerRepository, IClinicRepository clinicRepository)
+        public ProviderService(IProviderRepository providerRepository)
         {
             this.providerRepository = providerRepository;
-            this.ClinicRepository = clinicRepository;
         }
 
         public void AddProvider(Provider provider)
@@ -28,11 +26,10 @@ namespace ClinicFlow.Services
 
         public IEnumerable<Provider> GetProvidersByClinicId(int clinicId)
         {
-            if (ClinicRepository.GetClinicById(clinicId) == null)
+            if (providerRepository.GetProvidersByClinicId(clinicId) == null)
             {
-                throw new NotFoundException("Clinic not found with ID: " + clinicId);
+                throw new NotFoundException("No providers found for clinic with ID: " + clinicId);
             }
-
             return providerRepository.GetProvidersByClinicId(clinicId);
         }
 
@@ -48,12 +45,12 @@ namespace ClinicFlow.Services
 
         public Provider GetProvider(int id)
         {
-             var provider = providerRepository.GetProviderById(id);
-             if (provider == null)
-             {
-                 throw new NotFoundException("Provider not found with ID: " + id);
-             }
-             return provider;
+            var provider = providerRepository.GetProviderById(id);
+            if (provider == null)
+            {
+                throw new NotFoundException("Provider not found with ID: " + id);
+            }
+            return provider;
         }
 
         public void UpdateProvider(Provider provider)

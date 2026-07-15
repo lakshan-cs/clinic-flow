@@ -15,6 +15,7 @@ namespace ClinicFlow.Controllers
             this.chiefComplaintSpecialtyLookupService = chiefComplaintSpecialtyLookupService;
         }
 
+        // Get all chief complaint specialty lookups
         [HttpGet]
         public ActionResult<IEnumerable<ChiefComplaintSpecialtyLookup>> GetChiefComplaintSpecialtyLookups()
         {
@@ -22,6 +23,7 @@ namespace ClinicFlow.Controllers
             return Ok(lookups);
         }
 
+        // Get a chief complaint specialty lookup by chief complaint
         [HttpGet("chief-complaint/{chiefComplaint}")]
         public ChiefComplaintSpecialtyLookup? GetChiefComplaintSpecialityLookupByChiefComplaint(string chiefComplaint)
         {

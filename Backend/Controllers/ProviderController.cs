@@ -16,6 +16,7 @@ namespace ClinicFlow.Controllers
             this.providerService = providerService;
         }
 
+        // Get all providers or filter by specialty if provided
         [HttpGet]
         public IEnumerable<Provider> GetProviders([FromQuery] string? specialty)
         {
@@ -27,12 +28,14 @@ namespace ClinicFlow.Controllers
             return providerService.GetProviders();
         }
 
+        // Get providers by clinic ID
         [HttpGet("clinic/{clinicId}")]
         public IEnumerable<Provider> GetProvidersByClinicId(int clinicId)
         {
             return providerService.GetProvidersByClinicId(clinicId);
         }
 
+        // Get a specific provider by ID
         [HttpGet("{id}")]
         public ActionResult<Provider> GetProvider(int id)
         {
@@ -40,6 +43,7 @@ namespace ClinicFlow.Controllers
            
         }
 
+        // Add a new provider
         [HttpPost]
         public ActionResult<ProviderResponse> AddProvider([FromBody] ProviderRequest providerRequest)
         {
@@ -66,6 +70,7 @@ namespace ClinicFlow.Controllers
 
         }
 
+        // Update an existing provider
         [HttpPut]
         public ActionResult<ProviderResponse> UpdateProvider([FromBody] ProviderRequest providerRequest)
         {
@@ -88,6 +93,7 @@ namespace ClinicFlow.Controllers
             return Ok(providerResponse);
         }
 
+        // Delete a provider by ID
         [HttpDelete("{id}")]
         public void DeleteProvider(int id)
         {

@@ -16,6 +16,7 @@ namespace ClinicFlow.Controllers
             this.appointmentService = appointmentService;
         }
 
+        // Create a new appointment
         [HttpPost]
         public ActionResult<AppointmentResponse> CreateAppointment([FromBody] AppointmentRequest appointmentRequest)
         {
@@ -47,6 +48,7 @@ namespace ClinicFlow.Controllers
                 );
         }
 
+        // Get a specific appointment by ID
         [HttpGet("{id}")]
         public ActionResult<Appointment> GetAppointment(int id)
         {
@@ -58,24 +60,28 @@ namespace ClinicFlow.Controllers
             return appointment;
         }
 
+        // Get all appointments
         [HttpGet]
         public IEnumerable<Appointment> GetAllAppointments()
         {
             return appointmentService.GetAppointments();
         }
 
+        // Get appointments by patient ID
         [HttpGet("patient/{patientId}")]
         public IEnumerable<Appointment> GetAppointmentsByPatientId(int patientId)
         {
             return appointmentService.GetAppointmentsByPatientId(patientId);
         }
 
+        // Get appointments by provider ID
         [HttpGet("provider/{providerId}")]
         public IEnumerable<Appointment> GetAppointmentsByProviderId(int providerId)
         {
             return appointmentService.GetAppointmentsByProviderId(providerId);
         }
 
+        // Get appointments by clinic ID
         [HttpGet("clinic/{clinicId}")]
         public IEnumerable<Appointment> GetAppointmentsByClinicId(int clinicId)
         {

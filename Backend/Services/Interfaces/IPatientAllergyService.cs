@@ -8,7 +8,6 @@ public interface IPatientAllergyService
     IEnumerable<PatientAllergy> GetPatientAllergies();
     PatientAllergy GetPatientAllergy(int id);
     IEnumerable<PatientAllergy> GetPatientAllergiesByPatientId(int patientId);
-    IEnumerable<PatientAllergy> GetPatientAllergiesByAllergyId(int allergyId);
     void UpdatePatientAllergy(PatientAllergy patientAllergy);
     void DeletePatientAllergy(int id);
 }
