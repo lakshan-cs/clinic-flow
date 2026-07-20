@@ -23,7 +23,12 @@ namespace ClinicFlow.Controllers
             return allergyService.GetAllergies();
         }
 
-        // Get a specific allergy by ID
+        // 
+        /// <summary>
+        /// Get a specific allergy by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public ActionResult<Allergy> GetAllergy(int id)
         {
